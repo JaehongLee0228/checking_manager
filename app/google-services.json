@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:58273666203:android:bf51cdc8349cc3eb93223e",
         "android_client_info": {
-          "package_name": "com.example.checking_manager"
+          "package_name": "com.checking_manager.checking_manager"
         }
       },
       "oauth_client": [
