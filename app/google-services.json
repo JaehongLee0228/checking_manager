@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "58273666203",
+    "firebase_url": "https://checking-manager.firebaseio.com",
+    "project_id": "checking-manager",
+    "storage_bucket": "checking-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:58273666203:android:bf51cdc8349cc3eb93223e",
+        "android_client_info": {
+          "package_name": "com.example.checking_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "58273666203-nhrmads9ikbsdvv10cl51bh0rdd21j0q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDWUocCdoKNSaObDLC7VvUuzQQts9NMjWc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "58273666203-nhrmads9ikbsdvv10cl51bh0rdd21j0q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
