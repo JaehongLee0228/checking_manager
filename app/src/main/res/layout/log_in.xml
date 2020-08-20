@@ -34,4 +34,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="sign up" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/Google_Login"
+        android:layout_width="match_parent"
+        android:layout_height="50sp">
+    </com.google.android.gms.common.SignInButton>
 </LinearLayout>

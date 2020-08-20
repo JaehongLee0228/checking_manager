@@ -1,4 +1,4 @@
-package com.example.checking_manager;
+package com.checking_manager.checking_manager;
 
 import android.content.Context;
 
