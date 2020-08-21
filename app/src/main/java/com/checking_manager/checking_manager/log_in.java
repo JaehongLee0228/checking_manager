@@ -28,11 +28,14 @@ public class log_in extends AppCompatActivity implements GoogleApiClient.OnConne
     private static final int RC_SIGN_IN = 1000;
     private FirebaseAuth mAuth;
     private GoogleApiClient mGoogleApiClient;
+    private BackPressCloseHandler backPressCloseHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
+
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("58273666203-nhrmads9ikbsdvv10cl51bh0rdd21j0q.apps.googleusercontent.com")
@@ -92,4 +95,9 @@ public class log_in extends AppCompatActivity implements GoogleApiClient.OnConne
 
     }
 
+
+    @Override
+    public void onBackPressed() {
+        backPressCloseHandler.onBackPressed();
+    }
 }
