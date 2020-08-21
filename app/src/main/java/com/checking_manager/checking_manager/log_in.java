@@ -80,8 +80,8 @@ public class log_in extends AppCompatActivity implements GoogleApiClient.OnConne
                             Toast.makeText(log_in.this, "인증 실패", Toast.LENGTH_SHORT).show();
                         }else{
                             Toast.makeText(log_in.this, "구글 로그인 인증 성공", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(log_in.this, Main_sum.class);
-                            startActivity(intent);
+                            startActivity(new Intent(log_in.this, Main_sum.class));
+                            finish();
                         }
                     }
                 });
