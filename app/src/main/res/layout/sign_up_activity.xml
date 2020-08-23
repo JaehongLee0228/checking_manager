@@ -5,11 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".log_in"
-    android:gravity="center">
+    tools:context=".sign_up_activity">
 
     <EditText
-        android:id="@+id/log_in_ID_editText"
+        android:id="@+id/signUp_ID_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -18,7 +17,7 @@
         android:inputType="textEmailAddress" />
 
     <EditText
-        android:id="@+id/log_in_PW_editText"
+        android:id="@+id/signUp_PW_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -26,29 +25,19 @@
         android:gravity="center"
         android:inputType="textPassword" />
 
-    <CheckBox
-        android:id="@+id/log_in_autoID_checkBox"
+    <EditText
+        android:id="@+id/signUp_PW_check_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID 저장 X" />
-
-    <CheckBox
-        android:id="@+id/log_in_autoLogIn_checkBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="자동로그인 사용 X" />
+        android:ems="10"
+        android:hint="비밀번호 확인"
+        android:gravity="center"
+        android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/log_in_signIn_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="로그인" />
-
-    <Button
-        android:id="@+id/log_in_signUp_button"
+        android:id="@+id/signUp_completeButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="회원가입" />
-
 
 </LinearLayout>
