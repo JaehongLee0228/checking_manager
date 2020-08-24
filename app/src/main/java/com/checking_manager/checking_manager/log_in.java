@@ -78,6 +78,11 @@ public class log_in extends AppCompatActivity {
                 String email = log_in_ID.getText().toString().trim();
                 String password = log_in_PW.getText().toString().trim();
 
+                if(email.equals(null)||password.equals(null)){
+                    Toast.makeText(log_in.this,"이메일과 비밀번호를 입력하세요.",Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if(autologin == 0) {
                     Auto_editor.putInt("logInAuto", 1);
                     Auto_editor.commit();
