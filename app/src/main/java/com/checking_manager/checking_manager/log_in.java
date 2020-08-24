@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -28,17 +29,20 @@ public class log_in extends AppCompatActivity {
     private Button log_in_signIn;
     private Button log_in_signUp;
     private CheckBox log_in_autoLogIn;
+    private CheckBox log_in_autoID_fill;
 
     int autologin = 1;
+    int autoIDfill = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
 
-        SharedPreferences LogInAuto = getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
+        final SharedPreferences LogInAuto = getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
         final SharedPreferences.Editor Auto_editor = LogInAuto.edit();
         int logInAuto = LogInAuto.getInt("logInAuto",0);
+        int logIn_ID_Auto = LogInAuto.getInt("logIn_ID_Auto",0);
         String IdAuto = LogInAuto.getString("ID",null);
         String PWAuto = LogInAuto.getString("PW",null);
 
@@ -47,6 +51,7 @@ public class log_in extends AppCompatActivity {
         log_in_signUp = (Button)findViewById(R.id.log_in_signUp_button);
         log_in_signIn = (Button)findViewById(R.id.log_in_signIn_button);
         log_in_autoLogIn = (CheckBox)findViewById(R.id.log_in_autoLogIn_checkBox);
+        log_in_autoID_fill = (CheckBox)findViewById(R.id.log_in_autoID_checkBox);
 
         firebaseAuth = FirebaseAuth.getInstance();
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -56,6 +61,12 @@ public class log_in extends AppCompatActivity {
             loginUser(IdAuto,PWAuto);
             finish();
             startActivity(intent);
+        }
+
+        if(logIn_ID_Auto > 0) {
+            String ID = LogInAuto.getString("ID",null);
+            log_in_ID.setText(ID);
+            log_in_autoID_fill.setChecked(true);
         }
 
         log_in_autoLogIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -72,22 +83,43 @@ public class log_in extends AppCompatActivity {
             }
         });
 
+        log_in_autoID_fill.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked) {
+                    log_in_autoID_fill.setText("ID 저장 사용 O");
+                    autoIDfill = 0;
+                } else {
+                    log_in_autoID_fill.setText("ID 저장 사용 X");
+                    autoIDfill = 1;
+                }
+            }
+        });
+
         log_in_signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String email = log_in_ID.getText().toString().trim();
                 String password = log_in_PW.getText().toString().trim();
 
-                if(email.equals(null)||password.equals(null)){
-                    Toast.makeText(log_in.this,"이메일과 비밀번호를 입력하세요.",Toast.LENGTH_SHORT).show();
+                if (email.equals(null) || password.equals(null) || email.isEmpty() || password.isEmpty()) {
+                    Toast.makeText(log_in.this, "이메일과 비밀번호를 입력하세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
-                if(autologin == 0) {
+                if (autologin == 0) {
                     Auto_editor.putInt("logInAuto", 1);
                     Auto_editor.commit();
-                } else if(autologin == 1) {
+                } else if (autologin == 1) {
                     Auto_editor.putInt("logInAuto", 0);
+                    Auto_editor.commit();
+                }
+
+                if(autoIDfill == 0) {
+                    Auto_editor.putInt("logIn_ID_Auto", 1);
+                    Auto_editor.commit();
+                } else if(autoIDfill == 1) {
+                    Auto_editor.putInt("logIn_ID_Auto", 0);
                     Auto_editor.commit();
                 }
 
