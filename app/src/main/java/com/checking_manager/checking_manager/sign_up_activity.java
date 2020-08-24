@@ -31,11 +31,6 @@ public class sign_up_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up_activity);
 
-        final SharedPreferences keySeq = getSharedPreferences("keySeq_Save", MODE_PRIVATE);
-        final SharedPreferences.Editor editor = keySeq.edit();
-        final int key = keySeq.getInt("key", 0);
-
-
         signUp_ID = (EditText)findViewById(R.id.signUp_ID_editText);
         signUp_PW = (EditText)findViewById(R.id.signUp_PW_editText);
         signUp_PW_check = (EditText)findViewById(R.id.signUp_PW_check_editText);
@@ -50,7 +45,7 @@ public class sign_up_activity extends AppCompatActivity {
                 if(signUp_PW.getText().length() < 8)
                     Toast.makeText(sign_up_activity.this,"비밀번호는 8글자 이상이어야 합니다.",Toast.LENGTH_SHORT).show();
                 else if(signUp_PW.getText().toString().equals(signUp_PW_check.getText().toString())) {
-                    String email = signUp_ID.getText().toString().trim();
+                    final String email = signUp_ID.getText().toString().trim();
                     String password = signUp_PW.getText().toString().trim();
 
                     firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -58,7 +53,7 @@ public class sign_up_activity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()) {
-                                FirebaseDatabase.getInstance().getReference("Members").child(signUp_ID.getText().toString());
+                                Toast.makeText(sign_up_activity.this,"회원가입 완료",Toast.LENGTH_SHORT).show();
                                 finish();
                             } else {
                                 Toast.makeText(sign_up_activity.this,"이미 가입된 이메일입니다.",Toast.LENGTH_SHORT).show();
@@ -70,5 +65,11 @@ public class sign_up_activity extends AppCompatActivity {
                 else Toast.makeText(sign_up_activity.this,"비밀번호를 다시 확인해주세요.",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static String StringReplace(String str){
+        String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z]";
+        str =str.replaceAll(match, "");
+        return str;
     }
 }
