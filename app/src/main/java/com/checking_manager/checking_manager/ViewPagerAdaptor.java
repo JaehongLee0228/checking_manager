@@ -39,11 +39,11 @@ public class ViewPagerAdaptor extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position){
             case 0:
-                return "가입한 그룹";
+                return "등록된 장비";
             case 1:
-                return "그룹 만들기";
+                return "물품 점검";
             case 2:
-                return "그룹 가입하기";
+                return "그룹 정보";
             default:
                 break;
         }

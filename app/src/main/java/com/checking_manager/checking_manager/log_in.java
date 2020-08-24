@@ -4,124 +4,100 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 
-public class log_in extends AppCompatActivity {
+public class log_in extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener {
+    SignInButton Google_Login;
 
-    private FirebaseAuth firebaseAuth;
+    private static final int RC_SIGN_IN = 1000;
+    private FirebaseAuth mAuth;
+    private GoogleApiClient mGoogleApiClient;
     private BackPressCloseHandler backPressCloseHandler;
-
-    private EditText log_in_ID;
-    private EditText log_in_PW;
-    private Button log_in_signIn;
-    private Button log_in_signUp;
-    private CheckBox log_in_autoLogIn;
-
-    int autologin = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
 
-        SharedPreferences LogInAuto = getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
-        final SharedPreferences.Editor Auto_editor = LogInAuto.edit();
-        int logInAuto = LogInAuto.getInt("logInAuto",0);
-        String IdAuto = LogInAuto.getString("ID",null);
-        String PWAuto = LogInAuto.getString("PW",null);
-
-        log_in_ID = (EditText)findViewById(R.id.log_in_ID_editText);
-        log_in_PW = (EditText)findViewById(R.id.log_in_PW_editText);
-        log_in_signUp = (Button)findViewById(R.id.log_in_signUp_button);
-        log_in_signIn = (Button)findViewById(R.id.log_in_signIn_button);
-        log_in_autoLogIn = (CheckBox)findViewById(R.id.log_in_autoLogIn_checkBox);
-
-        firebaseAuth = FirebaseAuth.getInstance();
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        if(logInAuto > 0) {
-            Intent intent = new Intent(log_in.this, Main_sum.class);
-            loginUser(IdAuto,PWAuto);
-            finish();
-            startActivity(intent);
-        }
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken("58273666203-nhrmads9ikbsdvv10cl51bh0rdd21j0q.apps.googleusercontent.com")
+                .requestEmail()
+                .build();
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API,gso)
+                .build();
 
-        log_in_autoLogIn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        mAuth = FirebaseAuth.getInstance();
+
+        Google_Login = findViewById(R.id.Google_Login);
+        Google_Login.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
-                    log_in_autoLogIn.setText("자동 로그인 사용 O");
-                    autologin = 0;
-                }
-                else {
-                    log_in_autoLogIn.setText("자동로그인 사용 X");
-                    autologin = 1;
-                }
+            public void onClick(View view) {
+                Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
+                startActivityForResult(signInIntent,RC_SIGN_IN);
             }
         });
-
-        log_in_signIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String email = log_in_ID.getText().toString().trim();
-                String password = log_in_PW.getText().toString().trim();
-
-                if(autologin == 0) {
-                    Auto_editor.putInt("logInAuto", 1);
-                    Auto_editor.commit();
-                } else if(autologin == 1) {
-                    Auto_editor.putInt("logInAuto", 0);
-                    Auto_editor.commit();
-                }
-
-                Auto_editor.putString("ID", email);
-                Auto_editor.putString("PW", password);
-                Auto_editor.commit();
-
-                loginUser(email, password);
-            }
-        });
-
-        log_in_signUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(log_in.this,sign_up_activity.class));
-            }
-        });
-
-
     }
 
-    private void loginUser(String email, String password) {
-        firebaseAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(log_in.this, new OnCompleteListener<AuthResult>() {
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result.isSuccess()) {
+                //구글 로그인 성공해서 파베에 인증
+                GoogleSignInAccount account = result.getSignInAccount();
+                firebaseAuthWithGoogle(account);
+            }
+            else{
+                //구글 로그인 실패
+            }
+        }
+    }
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct){
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(),null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()) {
+                        if(!task.isSuccessful()){
+                            Toast.makeText(log_in.this, "인증 실패", Toast.LENGTH_SHORT).show();
+                        }else{
+                            Toast.makeText(log_in.this, "구글 로그인 인증 성공", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(log_in.this, Main_sum.class));
-                            Toast.makeText(log_in.this,"로그인 성공",Toast.LENGTH_SHORT).show();
                             finish();
                         }
-                        else Toast.makeText(log_in.this,"로그인 오류",Toast.LENGTH_SHORT).show();
                     }
                 });
     }
 
     @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+
+    @Override
     public void onBackPressed() {
         backPressCloseHandler.onBackPressed();
     }
-
 }
