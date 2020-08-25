@@ -64,7 +64,6 @@ public class Before_enter extends AppCompatActivity {
                     listView.setAdapter(adapter);
                     count++;
                 }
-                Toast.makeText(Before_enter.this,count + "", Toast.LENGTH_SHORT).show();
             }
 
             @Override
