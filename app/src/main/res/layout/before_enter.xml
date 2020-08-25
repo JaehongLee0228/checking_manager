@@ -4,92 +4,43 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/group_make_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="그룹 만들기"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="그룹 참가하기"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"/>
+
+    </LinearLayout>
+
     <TextView
+        android:id="@+id/trial_TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="내가 가입한 그룹"
+        android:text="가입한 그룹"
         android:textSize="30sp"
         android:layout_margin="10dp"
         android:textColor="#000000"/>
 
-    <HorizontalScrollView
+    <ListView
+        android:id="@+id/included_groups_listView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/test_bt"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/circle"
-            android:text="경북대학교 모바일 공학과"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:padding="10dp"
-            />
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/circle"
-            android:text="경북대학교 모바일 공학과"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:padding="10dp"
-            />
-
-        <Button
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/circle"
-            android:text="경북대학교 모바일 공학과"
-            android:textSize="20sp"
-            android:textColor="#000000"
-            android:padding="10dp"
-            />
-
-          <Button
-              android:layout_width="100dp"
-              android:layout_height="100dp"
-              android:layout_margin="10dp"
-              android:background="@drawable/circle"
-              android:text="경북대학교 모바일 공학과"
-              android:textSize="20sp"
-              android:textColor="#000000"
-              android:padding="10dp"
-              />
-
-        </LinearLayout>
-    </HorizontalScrollView>
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="그룹 만들기"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="그룹 참가하기"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="5dp"/>
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="도움말"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"/>
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
