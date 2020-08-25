@@ -1,5 +1,6 @@
 package com.checking_manager.checking_manager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -26,6 +27,5 @@ public class Main_sum extends AppCompatActivity {
         viewPager.setAdapter(fragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-
 
 }
