@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,8 @@ public class Before_enter extends AppCompatActivity {
     private BackPressCloseHandler backPressCloseHandler;
     private Button logout, make_group;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         SharedPreferences LogInAuto=getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
@@ -52,6 +55,8 @@ public class Before_enter extends AppCompatActivity {
         trial = (TextView)findViewById(R.id.trial_TextView);
         logout = (Button)findViewById(R.id.logout_Button);
         make_group = (Button)findViewById(R.id.group_make_button);
+
+
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Members").child(users_ID);
@@ -123,4 +128,6 @@ public class Before_enter extends AppCompatActivity {
         str =str.replaceAll(match, "");
         return str;
     }
+
+
 }
