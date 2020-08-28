@@ -1,9 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".group_making">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/group_name_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="그룹 이름"
+                android:inputType="textPersonName" />
+
+            <Button
+                android:id="@+id/group_make_groupName_repeat_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="그룹 이름 중복 확인" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="그룹 멤버" />
+
+            <ListView
+                android:id="@+id/group_make_addedMember_listView"
+                android:choiceMode="singleChoice"
+                android:layout_weight="1"
+                android:scrollbars="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="150dp" >
+
+            </ListView>
+
+            <EditText
+                android:id="@+id/group_make_memberName_EditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="추가할 멤버 이메일"
+                android:inputType="textEmailAddress" />
+
+            <RadioGroup
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <RadioButton
+                    android:id="@+id/group_make_admin_radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="관리자" />
+
+                <RadioButton
+                    android:id="@+id/group_make_member_radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="일반 멤버" />
+            </RadioGroup>
+
+            <Button
+                android:id="@+id/group_make_member_add_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="멤버 추가하기" />
+
+            <Button
+                android:id="@+id/group_make_complete_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="그룹 만들기" />
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

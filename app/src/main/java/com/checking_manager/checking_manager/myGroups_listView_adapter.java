@@ -1,6 +1,7 @@
 package com.checking_manager.checking_manager;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class myGroups_listView_adapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public usersGroupsList getItem(int position) {
         return listViewGroupList.get(position);
     }
 
@@ -52,5 +53,9 @@ public class myGroups_listView_adapter extends BaseAdapter {
     public void addItem(String group_name, String group_status) {
         usersGroupsList item = new usersGroupsList(group_name, group_status);
         listViewGroupList.add(item);
+    }
+
+    public void removeItem(int position) {
+        listViewGroupList.remove(position);
     }
 }
