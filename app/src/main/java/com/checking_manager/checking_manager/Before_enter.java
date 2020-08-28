@@ -32,19 +32,25 @@ public class Before_enter extends AppCompatActivity {
     private FirebaseDatabase databse;
     private DatabaseReference reference;
     private BackPressCloseHandler backPressCloseHandler;
+    private Button logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences LogInAuto=getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
+        final SharedPreferences.Editor Auto_editor = LogInAuto.edit();
+        int logInAuto=LogInAuto.getInt("logInAuto",0);
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.before_enter);
 
-        SharedPreferences LogInAuto = getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
         String users_ID = LogInAuto.getString("ID",null);
         users_ID = stringReplace(users_ID);
 
         adapter = new myGroups_listView_adapter();
         listView = (ListView)findViewById(R.id.included_groups_listView);
         trial = (TextView)findViewById(R.id.trial_TextView);
+        logout = (Button)findViewById(R.id.logout_Button);
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Members").child(users_ID);
@@ -81,6 +87,19 @@ public class Before_enter extends AppCompatActivity {
 
                 Intent intent = new Intent(Before_enter.this, Main_sum.class);
                 intent.putExtra("group_name", group_name);
+                startActivity(intent);
+            }
+        });
+
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Before_enter.this, log_in.class);
+                Auto_editor.putInt("logInAuto", 0);
+                Auto_editor.putString("ID", null);
+                Auto_editor.putString("PW", null);
+                Auto_editor.commit();
+                finish();
                 startActivity(intent);
             }
         });
