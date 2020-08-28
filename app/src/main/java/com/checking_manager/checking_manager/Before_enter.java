@@ -32,7 +32,7 @@ public class Before_enter extends AppCompatActivity {
     private FirebaseDatabase databse;
     private DatabaseReference reference;
     private BackPressCloseHandler backPressCloseHandler;
-    private Button logout;
+    private Button logout, make_group;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class Before_enter extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.included_groups_listView);
         trial = (TextView)findViewById(R.id.trial_TextView);
         logout = (Button)findViewById(R.id.logout_Button);
+        make_group = (Button)findViewById(R.id.group_make_button);
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Members").child(users_ID);
@@ -101,6 +102,13 @@ public class Before_enter extends AppCompatActivity {
                 Auto_editor.commit();
                 finish();
                 startActivity(intent);
+            }
+        });
+
+        make_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Before_enter.this, group_making.class));
             }
         });
     }
