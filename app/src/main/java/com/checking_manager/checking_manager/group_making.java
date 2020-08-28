@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,15 +32,24 @@ public class group_making extends AppCompatActivity {
     private EditText group_name_input, member_email_adding;
     private RadioButton admin, member;
     private FirebaseDatabase databse;
-    private DatabaseReference reference;
+    private DatabaseReference reference, reference2;
 
     private ListView listView;
     private myGroups_listView_adapter adapter;
+
+    private String users_ID;
+
+    private boolean ready = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_making);
+
+        SharedPreferences LogInAuto=getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
+
+        users_ID = LogInAuto.getString("ID",null);
+        users_ID = stringReplace(users_ID);
 
         member_add = (Button)findViewById(R.id.group_make_member_add_button);
         make_group_complete = (Button)findViewById(R.id.group_make_complete_button);
@@ -54,6 +64,7 @@ public class group_making extends AppCompatActivity {
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Groups");
+        reference2 = databse.getReference();
 
         listView.setAdapter(adapter);
         member_add.setOnClickListener(member_add_onClickListener);
@@ -62,8 +73,61 @@ public class group_making extends AppCompatActivity {
         make_group_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String group_name = group_name_input.getText().toString();
+                if(!ready) {
+                    Toast.makeText(group_making.this,"그룹 이름 중복 검사를 해주세요.", Toast.LENGTH_SHORT).cancel();
+                    return;
+                }
 
+                final String group_name = group_name_input.getText().toString();
+                reference.child(group_name).child("group_name").setValue(group_name);
+
+                final int[] index = {0};
+                for(; index[0] < adapter.getCount(); index[0]++) {
+                    final String email = adapter.getItem(index[0]).getGroupName();
+                    final String status = adapter.getItem(index[0]).getGroupStatus();
+
+                    reference.child(group_name).child("members").child(index[0] + "").child("email").setValue(email);
+                    reference.child(group_name).child("members").child(index[0] + "").child("status").setValue(status);
+
+                    reference2.child("Members").child(stringReplace(email)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            int count = 0;
+                            for(DataSnapshot ds : snapshot.getChildren())
+                                count++;
+
+                            reference2.child("Members").child(stringReplace(email)).child(count + "").child("group_name").setValue(group_name);
+                            reference2.child("Members").child(stringReplace(email)).child(count + "").child("group_status").setValue(status);
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+                reference.child(group_name).child("members").child(index[0] + "").child("email").setValue(users_ID);
+                reference.child(group_name).child("members").child(index[0] + "").child("status").setValue("admin");
+
+                reference2.child("Members").child(stringReplace(users_ID)).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int count = 0;
+                        for(DataSnapshot ds : snapshot.getChildren())
+                            count++;
+
+                        reference2.child("Members").child(stringReplace(users_ID)).child(count + "").child("group_name").setValue(group_name);
+                        reference2.child("Members").child(stringReplace(users_ID)).child(count + "").child("group_status").setValue("admin");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+                finish();
             }
         });
 
@@ -97,10 +161,16 @@ public class group_making extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String group_name = group_name_input.getText().toString();
+            if(group_name == null) {
+                Log.d("adding_group_name_input", group_name);
+                Toast.makeText(group_making.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).cancel();
+                return;
+            }
 
             reference.child(group_name).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                     int judge = 0;
                     for(DataSnapshot ds : snapshot.getChildren()) {
                         Object group_name_key = ds.child("group_name").getKey();
@@ -112,8 +182,10 @@ public class group_making extends AppCompatActivity {
                             return;
                         }
                     }
-                    if(judge == 0)
-                        Toast.makeText(group_making.this,"사용할 수 있는 그룹 이름입니다.", Toast.LENGTH_SHORT).cancel();
+                    if(judge == 0) {
+                        Toast.makeText(group_making.this, "사용할 수 있는 그룹 이름입니다.", Toast.LENGTH_SHORT).cancel();
+                        ready = true;
+                    }
                 }
 
                 @Override
@@ -131,6 +203,11 @@ public class group_making extends AppCompatActivity {
             String email = member_email_adding.getText().toString();
             if(!checkEmail(email)) {
                 Toast.makeText(group_making.this,"올바른 이메일을 입력해주세요.",Toast.LENGTH_SHORT).cancel();
+                return;
+            }
+
+            if(email.equals(users_ID)) {
+                Toast.makeText(group_making.this,"회원님의 아이디입니다.", Toast.LENGTH_SHORT).cancel();
                 return;
             }
 
@@ -171,4 +248,9 @@ public class group_making extends AppCompatActivity {
         return EMAIL_ADDRESS_PATTERN.matcher(email).matches();
     }
 
+    public static String stringReplace(String str){
+        String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z]";
+        str =str.replaceAll(match, "");
+        return str;
+    }
 }

@@ -36,13 +36,12 @@ public class Before_enter extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.before_enter);
+
         SharedPreferences LogInAuto=getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
         final SharedPreferences.Editor Auto_editor = LogInAuto.edit();
         int logInAuto=LogInAuto.getInt("logInAuto",0);
-
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.before_enter);
 
         String users_ID = LogInAuto.getString("ID",null);
         users_ID = stringReplace(users_ID);
@@ -109,6 +108,7 @@ public class Before_enter extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Before_enter.this, group_making.class));
+
             }
         });
     }
