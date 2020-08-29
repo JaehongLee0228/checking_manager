@@ -4,10 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,7 +17,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -24,7 +25,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class group_making extends AppCompatActivity {
@@ -74,16 +74,18 @@ public class group_making extends AppCompatActivity {
         make_group_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!ready) {
-                    Toast.makeText(group_making.this,"그룹 이름 중복 검사를 해주세요.", Toast.LENGTH_SHORT).cancel();
+                if (!ready) {
+                    Toast.makeText(getApplicationContext(), "그룹 이름 중복 검사를 해주세요.", Toast.LENGTH_SHORT).cancel();
                     return;
                 }
+
+                showProgressDialog();
 
                 final String group_name = group_name_input.getText().toString();
                 reference.child(group_name).child("group_name").setValue(group_name);
 
                 final int[] index = {0};
-                for(; index[0] < adapter.getCount(); index[0]++) {
+                for (; index[0] < adapter.getCount(); index[0]++) {
                     final String email = adapter.getItem(index[0]).getGroupName();
                     final String status = adapter.getItem(index[0]).getGroupStatus();
 
@@ -94,7 +96,7 @@ public class group_making extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             int count = 0;
-                            for(DataSnapshot ds : snapshot.getChildren())
+                            for (DataSnapshot ds : snapshot.getChildren())
                                 count++;
 
                             reference2.child("Members").child(stringReplace(email)).child(count + "").child("group_name").setValue(group_name);
@@ -115,7 +117,7 @@ public class group_making extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         int count = 0;
-                        for(DataSnapshot ds : snapshot.getChildren())
+                        for (DataSnapshot ds : snapshot.getChildren())
                             count++;
 
                         reference2.child("Members").child(stringReplace(users_ID)).child(count + "").child("group_name").setValue(group_name);
@@ -127,8 +129,15 @@ public class group_making extends AppCompatActivity {
 
                     }
                 });
-
-                finish();
+                Handler mHandler = new Handler();
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                        Intent intent = new Intent(group_making.this, Before_enter.class);
+                        startActivity(intent);
+                    }
+                }, 1000);
             }
         });
 
@@ -162,8 +171,8 @@ public class group_making extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String group_name = group_name_input.getText().toString();
-            if(group_name == null) {
-                Log.d("adding_group_name_input", group_name);
+            if(group_name_input.getText() == null) {
+                Log.d("adding_group_name_input", "null");
                 Toast.makeText(group_making.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).cancel();
                 return;
             }
@@ -273,5 +282,12 @@ public class group_making extends AppCompatActivity {
                 return false;
         }
         return true;
+    }
+
+    public void showProgressDialog() {
+        ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("작업 중");
+        dialog.show();
     }
 }

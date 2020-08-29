@@ -16,6 +16,7 @@
             android:text="그룹 만들기"/>
 
         <Button
+            android:id="@+id/group_search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="그룹 참가하기" />
