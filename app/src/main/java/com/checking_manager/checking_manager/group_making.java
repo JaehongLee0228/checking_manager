@@ -185,17 +185,12 @@ public class group_making extends AppCompatActivity {
             reference.child(group_name).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                     int judge = 0;
-                    for(DataSnapshot ds : snapshot.getChildren()) {
-                        Object group_name_key = ds.child("group_name").getKey();
-                        if(group_name_key == null)
-                            continue;
-                        else {
-                            Toast.makeText(group_making.this,"이미 존재하는 그룹 이름입니다.",Toast.LENGTH_SHORT).show();
-                            judge = 1;
-                            return;
-                        }
+                    Object result = snapshot.child("group_name").getValue();
+                    if(result != null) {
+                        Toast.makeText(group_making.this,"이미 존재하는 그룹 이름입니다.",Toast.LENGTH_SHORT).show();
+                        judge = 1;
+                        return;
                     }
                     if(judge == 0) {
                         Toast.makeText(group_making.this, "사용할 수 있는 그룹 이름입니다.", Toast.LENGTH_SHORT).cancel();
