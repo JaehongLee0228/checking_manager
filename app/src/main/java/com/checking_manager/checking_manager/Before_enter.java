@@ -115,6 +115,14 @@ public class Before_enter extends AppCompatActivity {
                 finish();
             }
         });
+
+        search_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Before_enter.this, group_searching.class));
+
+            }
+        });
     }
 
     @Override
