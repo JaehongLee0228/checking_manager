@@ -51,6 +51,7 @@ public class Before_enter extends AppCompatActivity {
         trial = (TextView)findViewById(R.id.trial_TextView);
         logout = (Button)findViewById(R.id.logout_Button);
         make_group = (Button)findViewById(R.id.group_make_button);
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Members").child(users_ID);
