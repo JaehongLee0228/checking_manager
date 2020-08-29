@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -166,6 +167,11 @@ public class group_making extends AppCompatActivity {
                 Toast.makeText(group_making.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).cancel();
                 return;
             }
+            if(!keyValue_check(group_name)) {
+                Toast.makeText(group_making.this, "그룹 이름에 '.', '#', '$', '[', or ']' 값을 사용하실 수 없습니다.", Toast.LENGTH_SHORT).cancel();
+                return;
+            }
+            Log.d("adding_group_name_input_check", group_name_input.getText().toString());
 
             reference.child(group_name).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
@@ -252,5 +258,20 @@ public class group_making extends AppCompatActivity {
         String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z]";
         str =str.replaceAll(match, "");
         return str;
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(group_making.this, Before_enter.class));
+        finish();
+    }
+
+    public boolean keyValue_check(String group_name) {
+        for(int i = 0; i < group_name.length(); i++) {
+            char temp = group_name.charAt(i);
+            if (temp == '.' || temp == '#' || temp == '$' || temp == '[' || temp == ']')
+                return false;
+        }
+        return true;
     }
 }
