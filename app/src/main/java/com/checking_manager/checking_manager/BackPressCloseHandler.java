@@ -6,7 +6,7 @@ import android.widget.Toast;
 public class BackPressCloseHandler {
 
     private long backKeyPressedTime = 0;
-    Toast toast;
+    private Toast toast;
     private Activity activity;
 
     public BackPressCloseHandler(Activity context) {
@@ -20,7 +20,9 @@ public class BackPressCloseHandler {
             return;
         }
         if(System.currentTimeMillis() <= backKeyPressedTime + 2000) {
-            activity.finish();
+            activity.finishAffinity();
+            System.runFinalization();
+            System.exit(0);
             toast.cancel();
         }
     }

@@ -26,35 +26,34 @@ import java.util.ArrayList;
 
 public class Before_enter extends AppCompatActivity {
 
-    private TextView trial;
-
     private ListView listView;
     private myGroups_listView_adapter adapter;
     private FirebaseDatabase databse;
     private DatabaseReference reference;
     private BackPressCloseHandler backPressCloseHandler;
-    private Button logout, make_group;
+    private Button logout, make_group, search_group;
 
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.before_enter);
+
         SharedPreferences LogInAuto=getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
         final SharedPreferences.Editor Auto_editor = LogInAuto.edit();
         int logInAuto=LogInAuto.getInt("logInAuto",0);
-
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.before_enter);
 
         String users_ID = LogInAuto.getString("ID",null);
         users_ID = stringReplace(users_ID);
 
         adapter = new myGroups_listView_adapter();
         listView = (ListView)findViewById(R.id.included_groups_listView);
-        trial = (TextView)findViewById(R.id.trial_TextView);
         logout = (Button)findViewById(R.id.logout_Button);
         make_group = (Button)findViewById(R.id.group_make_button);
+        search_group = (Button)findViewById(R.id.group_search_button);
+
+        backPressCloseHandler = new BackPressCloseHandler(this);
 
 
 
@@ -90,10 +89,14 @@ public class Before_enter extends AppCompatActivity {
                 usersGroupsList item = (usersGroupsList)parent.getItemAtPosition(position);
 
                 String group_name = item.getGroupName();
+                String group_status = item.getGroupStatus();
 
-                Intent intent = new Intent(Before_enter.this, Main_sum.class);
-                intent.putExtra("group_name", group_name);
-                startActivity(intent);
+                Intent intent;
+                if(group_status.equals("admin")) {
+
+                } else if (group_status.equals("member")) {
+
+                }
             }
         });
 
@@ -114,6 +117,15 @@ public class Before_enter extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Before_enter.this, group_making.class));
+                finish();
+            }
+        });
+
+        search_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Before_enter.this, group_searching.class));
+
             }
         });
     }
