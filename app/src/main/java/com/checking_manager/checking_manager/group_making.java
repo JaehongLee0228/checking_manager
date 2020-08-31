@@ -50,7 +50,6 @@ public class group_making extends AppCompatActivity {
         SharedPreferences LogInAuto=getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
 
         users_ID = LogInAuto.getString("ID",null);
-        users_ID = stringReplace(users_ID);
 
         member_add = (Button)findViewById(R.id.group_make_member_add_button);
         make_group_complete = (Button)findViewById(R.id.group_make_complete_button);
