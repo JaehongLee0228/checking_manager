@@ -3,6 +3,7 @@ package com.checking_manager.checking_manager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,10 +31,14 @@ public class group_searching extends AppCompatActivity {
     private FirebaseDatabase databse;
     private DatabaseReference reference;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_searching);
+
+        SharedPreferences LogInAuto = getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
+        final String IdAuto = LogInAuto.getString("ID",null);
 
         search_button = (Button)findViewById(R.id.group_name_search_button);
         search_editText = (EditText)findViewById(R.id.group_name_search_EditText);
@@ -70,6 +75,17 @@ public class group_searching extends AppCompatActivity {
                             Log.d("searching_group_result", "null");
                             search_result.setText("해당하는 그룹은 존재하지 않습니다.");
                         } else if(result.toString().equals(search_group_name)) {
+                            int index = 0;
+                            for(DataSnapshot ds : snapshot.child("members").getChildren()) {
+                                Log.d("searching_already_group", ds.child("email").getValue().toString());
+                                String email = ds.child("email").getValue().toString();
+
+                                if(email.equals(stringReplace(IdAuto))) {
+                                    search_result.setText("이미 가입된 그룹입니다.\n" + result.toString());
+                                    return;
+                                }
+                                index++;
+                            }
                             Log.d("searching_group_result", "success");
                             join_request.setVisibility(View.VISIBLE);
                             search_result.setText("해당하는 결과를 찾았습니다.\n" + result.toString());
@@ -84,15 +100,47 @@ public class group_searching extends AppCompatActivity {
             }
         });
 
-        join_request.setOnClickListener(join_onClickListener);
+        join_request.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String search_group_name = search_editText.getText().toString();
+
+                reference.child(search_group_name).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        int count=  0;
+                        for(DataSnapshot ds : snapshot.child("approval").getChildren()) {
+                            String email = ds.child(count + "").getValue().toString();
+                            if(email.equals(stringReplace(IdAuto))) {
+                                Toast.makeText(group_searching.this,"이미 신청하신 그룹입니다.", Toast.LENGTH_SHORT).cancel();
+                                return;
+                            }
+                            count++;
+                        }
+                        if(count != 0){
+                            int index = 0;
+                            while(true) {
+                                Object result = snapshot.child("approval").child(index + "").getValue();
+                                if(result != null){
+                                    reference.child(search_group_name).child("approval").child(index + "").setValue(IdAuto);
+                                    break;
+                                }
+                                else index++;
+                            }
+                        }
+                        else reference.child(search_group_name).child("approval").child("0").setValue(IdAuto);
+                        Toast.makeText(group_searching.this, "신청되었습니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+        });
     }
-
-    Button.OnClickListener join_onClickListener = new Button.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-
-        }
-    };
 
     public boolean keyValue_check(String group_name) {
         for(int i = 0; i < group_name.length(); i++) {
@@ -103,4 +151,9 @@ public class group_searching extends AppCompatActivity {
         return true;
     }
 
+    public static String stringReplace(String str){
+        String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z]";
+        str =str.replaceAll(match, "");
+        return str;
+    }
 }
