@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/member_in_group_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/member_in_group_promotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="관리자 승급" />
+
+    <Button
+        android:id="@+id/member_in_group_kickOut"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="탈퇴" />
+
+</LinearLayout>
