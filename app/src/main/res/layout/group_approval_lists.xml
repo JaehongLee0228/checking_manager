@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/group_approval_list"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/group_approval_accept_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="승인" />
+
+    <Button
+        android:id="@+id/group_approval_decline_Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="거절" />
+
+</LinearLayout>
