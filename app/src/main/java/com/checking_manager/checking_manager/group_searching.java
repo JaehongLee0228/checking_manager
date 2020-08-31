@@ -56,11 +56,11 @@ public class group_searching extends AppCompatActivity {
                 final String search_group_name = search_editText.getText().toString();
 
                 if(search_editText.getText() == null) {
-                    Toast.makeText(group_searching.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).cancel();
+                    Toast.makeText(group_searching.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).show();
                     return;
                 }
                 if(!keyValue_check(search_group_name)) {
-                    Toast.makeText(group_searching.this, "그룹 이름에 '.', '#', '$', '[', or ']' 값을 사용하실 수 없습니다.", Toast.LENGTH_SHORT).cancel();
+                    Toast.makeText(group_searching.this, "그룹 이름에 '.', '#', '$', '[', or ']' 값을 사용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -107,7 +107,7 @@ public class group_searching extends AppCompatActivity {
                         for(DataSnapshot ds : snapshot.child("approval").getChildren()) {
                             String email = ds.child(count + "").getValue().toString();
                             if(email.equals(stringReplace(IdAuto))) {
-                                Toast.makeText(group_searching.this,"이미 신청하신 그룹입니다.", Toast.LENGTH_SHORT).cancel();
+                                Toast.makeText(group_searching.this,"이미 신청하신 그룹입니다.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
                             count++;
