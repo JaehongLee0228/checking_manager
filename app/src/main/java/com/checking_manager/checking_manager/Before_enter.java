@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,6 +33,8 @@ public class Before_enter extends AppCompatActivity {
     private BackPressCloseHandler backPressCloseHandler;
     private Button logout, make_group, search_group;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +54,8 @@ public class Before_enter extends AppCompatActivity {
         search_group = (Button)findViewById(R.id.group_search_button);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
+
+
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Members").child(users_ID);
@@ -134,4 +139,6 @@ public class Before_enter extends AppCompatActivity {
         str =str.replaceAll(match, "");
         return str;
     }
+
+
 }
