@@ -56,7 +56,6 @@ public class group_searching extends AppCompatActivity {
                 final String search_group_name = search_editText.getText().toString();
 
                 if(search_editText.getText() == null) {
-                    Log.d("searching_group_name_input", "null");
                     Toast.makeText(group_searching.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).cancel();
                     return;
                 }
@@ -64,7 +63,6 @@ public class group_searching extends AppCompatActivity {
                     Toast.makeText(group_searching.this, "그룹 이름에 '.', '#', '$', '[', or ']' 값을 사용하실 수 없습니다.", Toast.LENGTH_SHORT).cancel();
                     return;
                 }
-                Log.d("searching_group_name_input", search_group_name);
 
                 reference.child(search_group_name).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -72,12 +70,10 @@ public class group_searching extends AppCompatActivity {
                         Object result = snapshot.child("group_name").getValue();
                         if(result == null) {
                             join_request.setVisibility(View.GONE);
-                            Log.d("searching_group_result", "null");
                             search_result.setText("해당하는 그룹은 존재하지 않습니다.");
                         } else if(result.toString().equals(search_group_name)) {
                             int index = 0;
                             for(DataSnapshot ds : snapshot.child("members").getChildren()) {
-                                Log.d("searching_already_group", ds.child("email").getValue().toString());
                                 String email = ds.child("email").getValue().toString();
 
                                 if(email.equals(stringReplace(IdAuto))) {
@@ -86,7 +82,6 @@ public class group_searching extends AppCompatActivity {
                                 }
                                 index++;
                             }
-                            Log.d("searching_group_result", "success");
                             join_request.setVisibility(View.VISIBLE);
                             search_result.setText("해당하는 결과를 찾았습니다.\n" + result.toString());
                         }
