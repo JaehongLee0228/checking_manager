@@ -18,6 +18,9 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class sign_up_activity extends AppCompatActivity {
 
     private EditText signUp_ID;
@@ -41,6 +44,11 @@ public class sign_up_activity extends AppCompatActivity {
         signUp_complete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String email_input = signUp_ID.getText().toString();
+                if(!isValidEmail(email_input)) {
+                    Toast.makeText(sign_up_activity.this, "유효한 이메일을 입력해주세요.", Toast.LENGTH_SHORT).cancel();
+                    return;
+                }
 
                 if(signUp_PW.getText().length() < 8)
                     Toast.makeText(sign_up_activity.this,"비밀번호는 8글자 이상이어야 합니다.",Toast.LENGTH_SHORT).show();
@@ -71,5 +79,15 @@ public class sign_up_activity extends AppCompatActivity {
         String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z]";
         str =str.replaceAll(match, "");
         return str;
+    }
+
+    public static boolean isValidEmail(String email) {
+        boolean err = false;
+        String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(email);
+        if(m.matches())
+            err = true;
+        return err;
     }
 }
