@@ -50,7 +50,6 @@ public class group_making extends AppCompatActivity {
         SharedPreferences LogInAuto=getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
 
         users_ID = LogInAuto.getString("ID",null);
-        users_ID = stringReplace(users_ID);
 
         member_add = (Button)findViewById(R.id.group_make_member_add_button);
         make_group_complete = (Button)findViewById(R.id.group_make_complete_button);
@@ -172,7 +171,6 @@ public class group_making extends AppCompatActivity {
         public void onClick(View v) {
             final String group_name = group_name_input.getText().toString();
             if(group_name_input.getText() == null) {
-                Log.d("adding_group_name_input", "null");
                 Toast.makeText(group_making.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).cancel();
                 return;
             }
@@ -180,7 +178,6 @@ public class group_making extends AppCompatActivity {
                 Toast.makeText(group_making.this, "그룹 이름에 '.', '#', '$', '[', or ']' 값을 사용하실 수 없습니다.", Toast.LENGTH_SHORT).cancel();
                 return;
             }
-            Log.d("adding_group_name_input_check", group_name_input.getText().toString());
 
             reference.child(group_name).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
