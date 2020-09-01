@@ -29,7 +29,7 @@ import java.util.ArrayList;
 public class frag_assign  extends Fragment {
 
     private View view;
-    private TextView my_group_name_textView;
+    private TextView my_group_name_textView, group_approval_textView;
     private Button withdrawl_button;
     private ListView admin_listView, member_listView, approval_listView;
     private ArrayList<String> admin_list;
@@ -56,6 +56,7 @@ public class frag_assign  extends Fragment {
         final SharedPreferences LogInAuto = context.getSharedPreferences("AutoLogIn_SAVE", Context.MODE_PRIVATE);
         final String IdAuto = LogInAuto.getString("ID",null);
 
+        group_approval_textView = (TextView)view.findViewById(R.id.group_approval_TextView);
         approval_listView = (ListView)view.findViewById(R.id.group_approval_listView);
         member_listView = (ListView)view.findViewById(R.id.member_listView);
         admin_listView = (ListView)view.findViewById(R.id.admin_listView);
@@ -79,6 +80,9 @@ public class frag_assign  extends Fragment {
         approval_adapter = new groupApprovalAdapter();
         approval_listView.setAdapter(approval_adapter);
 
+        group_approval_textView.setVisibility(View.GONE);
+        approval_listView.setVisibility(View.GONE);
+
         reference.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -100,12 +104,16 @@ public class frag_assign  extends Fragment {
                         admin_listView.setAdapter(admin_adapter);
                     }
                 }
+                if(my_status == "admin") {
+                    approval_listView.setVisibility(View.VISIBLE);
+                    group_approval_textView.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
+            }   
         });
 
         reference.child("approval").addListenerForSingleValueEvent(new ValueEventListener() {
