@@ -90,13 +90,9 @@ public class Before_enter extends AppCompatActivity {
                 String group_status = item.getGroupStatus();
 
                 Intent intent = null;
-                if(group_status.equals("admin")) {
-                    intent = new Intent(Before_enter.this, Main_sum.class);
-                    Log.d("fragment_group_name_input", group_name);
-                    intent.putExtra("group_name", group_name);
-                } else if (group_status.equals("member")) {
-
-                }
+                intent = new Intent(Before_enter.this, Main_sum.class);
+                Log.d("fragment_group_name_input", group_name);
+                intent.putExtra("group_name", group_name);
                 startActivity(intent);
             }
         });

@@ -46,7 +46,7 @@ public class frag_assign  extends Fragment implements OnItemClick{
     private String IdAuto = "";
 
     private int admin_count = 0;
-    private String my_status;
+    private String my_status = "";
 
     public static frag_assign newinstance(){
         frag_assign fragtrd = new frag_assign();
@@ -441,9 +441,19 @@ public class frag_assign  extends Fragment implements OnItemClick{
             accept(ID);
         else if(value.equals("decline"))
             decline(ID);
-        else if(value.equals("promotion"))
-            promotion(ID);
-        else if(value.equals("kick_out"))
-            kick_out(ID);
+        else if(value.equals("promotion")) {
+            if(my_status.equals("member"))
+                Toast.makeText(getActivity(), "관리자만 사용할 수 있는 기능입니다.", Toast.LENGTH_SHORT).show();
+            else if(my_status.equals("admin"))
+                promotion(ID);
+            else Toast.makeText(getActivity(), "잠시후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+        }
+        else if(value.equals("kick_out")) {
+            if(my_status.equals("member"))
+                Toast.makeText(getActivity(), "관리자만 사용할 수 있는 기능입니다.", Toast.LENGTH_SHORT).show();
+            else if(my_status.equals("admin"))
+                kick_out(ID);
+            else Toast.makeText(getActivity(), "잠시후에 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+        }
     }
 }
