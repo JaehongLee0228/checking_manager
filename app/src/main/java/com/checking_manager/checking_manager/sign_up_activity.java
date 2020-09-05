@@ -46,7 +46,7 @@ public class sign_up_activity extends AppCompatActivity {
             public void onClick(View v) {
                 String email_input = signUp_ID.getText().toString();
                 if(!isValidEmail(email_input)) {
-                    Toast.makeText(sign_up_activity.this, "유효한 이메일을 입력해주세요.", Toast.LENGTH_SHORT).cancel();
+                    Toast.makeText(sign_up_activity.this, "유효한 이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
