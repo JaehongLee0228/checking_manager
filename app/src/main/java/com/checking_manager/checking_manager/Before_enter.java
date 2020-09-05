@@ -66,14 +66,12 @@ public class Before_enter extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String group_name;
                 String group_status;
-                int count = 0;
                 for(DataSnapshot ds : snapshot.getChildren()) {
-                    group_name = snapshot.child(count + "").child("group_name").getValue().toString();
-                    group_status = snapshot.child(count + "").child("group_status").getValue().toString();
+                    group_name = ds.child("group_name").getValue().toString();
+                    group_status = ds.child("group_status").getValue().toString();
 
                     adapter.addItem(group_name, group_status);
                     listView.setAdapter(adapter);
-                    count++;
                 }
             }
 

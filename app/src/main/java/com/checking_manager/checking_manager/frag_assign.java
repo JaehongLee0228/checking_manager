@@ -375,6 +375,11 @@ public class frag_assign  extends Fragment implements OnItemClick{
     }
 
     private void withdrawl() {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("작업 중");
+        dialog.show();
+
         reference.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -413,6 +418,15 @@ public class frag_assign  extends Fragment implements OnItemClick{
 
             }
         });
+
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().finish();
+                startActivity(new Intent(getActivity(), Before_enter.class));
+            }
+        }, 1000);
     }
 
     public String stringReplace(String str){
