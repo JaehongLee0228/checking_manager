@@ -30,5 +30,4 @@ public class Main_sum extends AppCompatActivity {
         viewPager.setAdapter(fragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
-
 }

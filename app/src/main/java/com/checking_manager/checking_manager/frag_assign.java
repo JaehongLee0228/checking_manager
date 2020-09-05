@@ -1,13 +1,16 @@
 package com.checking_manager.checking_manager;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -17,6 +20,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,7 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class frag_assign  extends Fragment {
+public class frag_assign  extends Fragment implements OnItemClick{
 
     private View view;
     private TextView my_group_name_textView, group_approval_textView;
@@ -35,9 +39,11 @@ public class frag_assign  extends Fragment {
     private ArrayList<String> admin_list;
     private ArrayAdapter<String> admin_adapter;
     private FirebaseDatabase database;
-    private DatabaseReference reference;
+    private DatabaseReference reference, accept_reference;
     private memberInGroupListAdapter member_adapter;
     private groupApprovalAdapter approval_adapter;
+    private String group_name = "";
+    private String IdAuto = "";
 
     private int admin_count = 0;
     private String my_status;
@@ -54,7 +60,7 @@ public class frag_assign  extends Fragment {
 
         Context context = getActivity();
         final SharedPreferences LogInAuto = context.getSharedPreferences("AutoLogIn_SAVE", Context.MODE_PRIVATE);
-        final String IdAuto = LogInAuto.getString("ID",null);
+        IdAuto = LogInAuto.getString("ID",null);
 
         group_approval_textView = (TextView)view.findViewById(R.id.group_approval_TextView);
         approval_listView = (ListView)view.findViewById(R.id.group_approval_listView);
@@ -63,11 +69,12 @@ public class frag_assign  extends Fragment {
         withdrawl_button = (Button)view.findViewById(R.id.withdrawl_Button);
         my_group_name_textView = (TextView)view.findViewById(R.id.tv_groupname);
 
-        final String group_name = getActivity().getIntent().getExtras().getString("group_name");
+        group_name = getActivity().getIntent().getExtras().getString("group_name");
         my_group_name_textView.setText(group_name);
 
-        database=FirebaseDatabase.getInstance();
-        reference=database.getReference().child("Groups").child(group_name);
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference().child("Groups").child(group_name);
+        accept_reference = database.getReference();
 
         admin_list = new ArrayList<String>();
         admin_adapter = new ArrayAdapter<String>
@@ -77,7 +84,7 @@ public class frag_assign  extends Fragment {
         member_adapter = new memberInGroupListAdapter();
         member_listView.setAdapter(member_adapter);
 
-        approval_adapter = new groupApprovalAdapter();
+        approval_adapter = new groupApprovalAdapter(this);
         approval_listView.setAdapter(approval_adapter);
 
         group_approval_textView.setVisibility(View.GONE);
@@ -133,21 +140,183 @@ public class frag_assign  extends Fragment {
             }
         });
 
-        withdrawl_button.setOnClickListener(new View.OnClickListener() {
+        withdrawl_button.setOnClickListener(withdrawl_onClickListener);
+
+        approval_listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View v) {
-                if(my_status.equals("admin")) {
-                    if(admin_count == 1) {
-                        Toast.makeText(getActivity(), "관리자가 회원님 뿐입니다.", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    //탈퇴하기 기능 넣어야한다..
-                } else if(my_status.equals("member")) {
-                    //탈퇴하기 기능 넣어야한다..
-                }
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
             }
         });
 
         return view;
+    }
+
+    Button.OnClickListener withdrawl_onClickListener = new Button.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(my_status.equals("admin")) {
+                if(admin_count == 1) {
+                    Toast.makeText(getActivity(), "관리자가 회원님 뿐입니다.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            withdrawl();
+        }
+    };
+
+    private void accept(final String ID) {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("작업 중");
+        dialog.show();
+        reference.child("approval").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    final String requester = ds.getValue().toString();
+                    if(requester.equals(ID)) {
+                        String temp_key = ds.getKey();
+                        Log.d("approval_delete", temp_key);
+                        reference.child("approval").child(temp_key).removeValue();
+                        reference.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int count = 0;
+                                for(DataSnapshot ds : snapshot.getChildren())
+                                    count++;
+                                reference.child("members").child(count + "").child("email").setValue(ID);
+                                reference.child("members").child(count + "").child("status").setValue("member");
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        accept_reference.child("Members").child(stringReplace(ID)).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                int count = 0;
+                                for (DataSnapshot ds : snapshot.getChildren())
+                                    count++;
+
+                                accept_reference.child("Members").child(stringReplace(ID)).child(count + "").child("group_name").setValue(group_name);
+                                accept_reference.child("Members").child(stringReplace(ID)).child(count + "").child("group_status").setValue("member");
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(frag_assign.this).attach(frag_assign.this).commit();
+                dialog.dismiss();
+            }
+        }, 1000);
+    }
+
+    private void decline(final String ID) {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("작업 중");
+        dialog.show();
+        reference.child("approval").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    String requester = ds.getValue().toString();
+                    if(requester.equals(ID)) {
+                        String temp_key = ds.getKey();
+                        reference.child("approval").child(temp_key).removeValue();
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(frag_assign.this).attach(frag_assign.this).commit();
+                dialog.dismiss();
+            }
+        }, 1000);
+    }
+
+    private void withdrawl() {
+        reference.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    String temp_email = ds.child("email").getValue().toString();
+                    if(temp_email.equals(IdAuto)) {
+                        String temp_key = ds.getKey();
+                        reference.child("members").child(temp_key).removeValue();
+                        break;
+                    }
+                }
+
+                final DatabaseReference temp_reference = database.getReference().child("Members").child(stringReplace(IdAuto));
+                temp_reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for(DataSnapshot ds : snapshot.getChildren()) {
+                            String temp_group_name = ds.child("group_name").getValue().toString();
+                            if(temp_group_name.equals(group_name)) {
+                                String temp_key = ds.getKey();
+                                temp_reference.child(temp_key).removeValue();
+                                break;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public String stringReplace(String str){
+        String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z]";
+        str =str.replaceAll(match, "");
+        return str;
+    }
+
+    @Override
+    public void onClick(String value, String ID) {
+        if(value.equals("accept"))
+            accept(ID);
+        else if(value.equals("decline"))
+            decline(ID);
     }
 }
