@@ -81,7 +81,7 @@ public class frag_assign  extends Fragment implements OnItemClick{
                 (getActivity(), R.layout.admin_in_group_lists, R.id.admin_in_group_list, admin_list);
         admin_listView.setAdapter(admin_adapter);
 
-        member_adapter = new memberInGroupListAdapter();
+        member_adapter = new memberInGroupListAdapter(this);
         member_listView.setAdapter(member_adapter);
 
         approval_adapter = new groupApprovalAdapter(this);
@@ -165,6 +165,116 @@ public class frag_assign  extends Fragment implements OnItemClick{
         }
     };
 
+    private void promotion(final String ID) {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("작업 중");
+        dialog.show();
+
+        reference.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    String email = ds.child("email").getValue().toString();
+                    if(email.equals(ID)) {
+                        String temp_key = ds.getKey();
+                        reference.child("members").child(temp_key).child("status").setValue("admin");
+
+                        accept_reference.child("Members").child(stringReplace(ID)).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot ds : snapshot.getChildren()) {
+                                    String temp_group_name = ds.child("group_name").getValue().toString();
+                                    if(temp_group_name.equals(group_name)) {
+                                        String temp_key2 = ds.getKey();
+                                        accept_reference.child("Members").child(stringReplace(ID)).child(temp_key2).child("group_status").setValue("admin");
+                                        return;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(frag_assign.this).attach(frag_assign.this).commit();
+                dialog.dismiss();
+            }
+        }, 1000);
+    }
+
+    private void kick_out(final String ID) {
+        final ProgressDialog dialog = new ProgressDialog(getContext());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("작업 중");
+        dialog.show();
+
+        reference.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    String email = ds.child("email").getValue().toString();
+                    if(email.equals(ID)) {
+                        String temp_key = ds.getKey();
+                        reference.child("members").child(temp_key).removeValue();
+
+                        accept_reference.child("Members").child(stringReplace(ID)).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for (DataSnapshot ds : snapshot.getChildren()) {
+                                    String temp_group_name = ds.child("group_name").getValue().toString();
+                                    if(temp_group_name.equals(group_name)) {
+                                        String temp_key2 = ds.getKey();
+                                        accept_reference.child("Members").child(stringReplace(ID)).child(temp_key2).removeValue();
+                                        return;
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                        return;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.detach(frag_assign.this).attach(frag_assign.this).commit();
+                dialog.dismiss();
+            }
+        }, 1000);
+    }
+
     private void accept(final String ID) {
         final ProgressDialog dialog = new ProgressDialog(getContext());
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -177,7 +287,6 @@ public class frag_assign  extends Fragment implements OnItemClick{
                     final String requester = ds.getValue().toString();
                     if(requester.equals(ID)) {
                         String temp_key = ds.getKey();
-                        Log.d("approval_delete", temp_key);
                         reference.child("approval").child(temp_key).removeValue();
                         reference.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -318,5 +427,9 @@ public class frag_assign  extends Fragment implements OnItemClick{
             accept(ID);
         else if(value.equals("decline"))
             decline(ID);
+        else if(value.equals("promotion"))
+            promotion(ID);
+        else if(value.equals("kick_out"))
+            kick_out(ID);
     }
 }
