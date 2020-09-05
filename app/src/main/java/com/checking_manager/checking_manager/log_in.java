@@ -3,9 +3,11 @@ package com.checking_manager.checking_manager;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -56,12 +58,8 @@ public class log_in extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        if(logInAuto > 0) {
-            Intent intent = new Intent(log_in.this, Main_sum.class);
-            loginUser(IdAuto,PWAuto);
-            finish();
-            startActivity(intent);
-        }
+        if(logInAuto > 0)
+            auto_logIn_function(IdAuto, PWAuto);
 
         if(logIn_ID_Auto > 0) {
             String ID = LogInAuto.getString("ID",null);
@@ -154,6 +152,24 @@ public class log_in extends AppCompatActivity {
                         else Toast.makeText(log_in.this,"로그인 오류",Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    public void auto_logIn_function(final String ID, final String PW) {
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("로그인 중");
+        dialog.show();
+        Handler mHandler = new Handler();
+        mHandler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(log_in.this, Before_enter.class);
+                loginUser(ID, PW);
+                finish();
+                startActivity(intent);
+                dialog.dismiss();
+            }
+        }, 1000);
     }
 
     @Override
