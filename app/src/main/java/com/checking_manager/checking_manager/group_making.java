@@ -238,6 +238,8 @@ public class group_making extends AppCompatActivity {
 
             adapter.addItem(email, status);
             adapter.notifyDataSetChanged();
+
+            member_email_adding.setText("");
         }
     };
 
