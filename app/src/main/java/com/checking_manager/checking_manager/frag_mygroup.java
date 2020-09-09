@@ -14,6 +14,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -30,8 +34,10 @@ public class frag_mygroup extends Fragment {
     private FloatingActionButton register_button;
     private String group_name = "", group_status = "", user_ID = "";
     private FirebaseDatabase database;
-    private DatabaseReference reference;
-    private int count = 0;
+    private DatabaseReference reference, stuff_reference;
+    private stuffRvAdapter adapter;
+    private RecyclerView recyclerView;
+    private LinearLayoutManager manager;
 
     public static frag_mygroup newinstance(){
         frag_mygroup fragfirst = new frag_mygroup();
@@ -48,6 +54,11 @@ public class frag_mygroup extends Fragment {
         user_ID = LogInAuto.getString("ID",null);
 
         register_button = (FloatingActionButton)view.findViewById(R.id.register_floatingActionButton);
+        recyclerView = (RecyclerView)view.findViewById(R.id.stuffs_recyclerView);
+        manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
+        adapter = new stuffRvAdapter();
+        recyclerView.setAdapter(adapter);
 
         if(bundle != null) {
             group_name = bundle.getString("group_name");
@@ -56,6 +67,7 @@ public class frag_mygroup extends Fragment {
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Groups").child(group_name).child("members");
+        stuff_reference = database.getReference("Groups").child(group_name).child("stuff");
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -78,9 +90,34 @@ public class frag_mygroup extends Fragment {
             }
         });
 
+        InitializeData();
+
         register_button.setOnClickListener(register_button_onClickListener);
 
         return view;
+    }
+
+    public void InitializeData() {
+
+
+        stuff_reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    String stuff_name = ds.getKey();
+                    int total_number_of = Integer.parseInt(ds.child("total").getValue().toString());
+                    int checked_number_of = Integer.parseInt(ds.child("checked").getValue().toString());
+
+                    adapter.addItem(stuff_name, total_number_of, checked_number_of);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     FloatingActionButton.OnClickListener register_button_onClickListener = new FloatingActionButton.OnClickListener() {
