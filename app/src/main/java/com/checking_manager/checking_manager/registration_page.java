@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -31,7 +32,8 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
     private registrationContentAdapter adapter;
     private FirebaseDatabase database;
     private DatabaseReference reference;
-    private String group_name = "";
+    private String group_name = "", period = "";
+    private RadioButton week_radioButton, month_radioButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,8 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
         kind_editText = (EditText)findViewById(R.id.registe_kind_of_stuff);
         content_editText = (EditText)findViewById(R.id.registe_check_content_editText);
         complete_button = (Button)findViewById(R.id.registe_complete_button);
+        week_radioButton = (RadioButton)findViewById(R.id.register_week_radioButton);
+        month_radioButton = (RadioButton)findViewById(R.id.register_month_radioButton);
 
         adapter = new registrationContentAdapter(this);
         content_listView = (ListView)findViewById(R.id.registe_listView);
@@ -71,6 +75,14 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
                     Toast.makeText(registration_page.this, "점검해야할 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(week_radioButton.isChecked())
+                    period = "week";
+                else if(month_radioButton.isChecked())
+                    period = "month";
+                else {
+                    Toast.makeText(registration_page.this, "점검주기를 선택해주세요.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 reference.child("stuff").child(stuff).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -89,7 +101,17 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
                         }
 
                         for(int i = 0; i < adapter.getCount(); i++)
-                            reference.child("stuff").child(stuff).child(position).child(i + "").setValue(adapter.getItem(i).getCheck_content());
+                            reference.child("stuff").child(stuff).child(position).child("contents").child(i + "").setValue(adapter.getItem(i).getCheck_content());
+                        reference.child("stuff").child(stuff).child(position).child("period").setValue(period);
+                        Object howmany_object = snapshot.child("total").getValue();
+                        if(!(howmany_object == null)) {
+                            int howmany = Integer.parseInt(howmany_object.toString());
+                            reference.child("stuff").child(stuff).child("total").setValue(++howmany);
+                        }
+                        else {
+                            reference.child("stuff").child(stuff).child("total").setValue(1);
+                            reference.child("stuff").child(stuff).child("checked").setValue(0);
+                        }
 
                         Handler mHandler = new Handler();
                         mHandler.postDelayed(new Runnable() {

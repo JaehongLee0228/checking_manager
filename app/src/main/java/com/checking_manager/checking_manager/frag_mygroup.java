@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class frag_mygroup extends Fragment {
     private String group_name = "", group_status = "", user_ID = "";
     private FirebaseDatabase database;
     private DatabaseReference reference;
+    private int count = 0;
 
     public static frag_mygroup newinstance(){
         frag_mygroup fragfirst = new frag_mygroup();
@@ -40,7 +42,9 @@ public class frag_mygroup extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_first,container, false);
-        group_name = getActivity().getIntent().getExtras().getString("group_name");
+        Bundle bundle = getActivity().getIntent().getExtras();
+        if(bundle != null)
+            group_name = bundle.getString("group_name");
 
         SharedPreferences LogInAuto= getActivity().getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
         user_ID = LogInAuto.getString("ID",null);
