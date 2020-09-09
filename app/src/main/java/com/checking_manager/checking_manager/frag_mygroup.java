@@ -43,17 +43,19 @@ public class frag_mygroup extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.frag_first,container, false);
         Bundle bundle = getActivity().getIntent().getExtras();
-        if(bundle != null)
-            group_name = bundle.getString("group_name");
 
         SharedPreferences LogInAuto= getActivity().getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
         user_ID = LogInAuto.getString("ID",null);
 
+        register_button = (FloatingActionButton)view.findViewById(R.id.register_floatingActionButton);
+
+        if(bundle != null) {
+            group_name = bundle.getString("group_name");
+            register_button.setVisibility(View.GONE);
+        }
+
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Groups").child(group_name).child("members");
-
-        register_button = (FloatingActionButton)view.findViewById(R.id.register_floatingActionButton);
-        register_button.setVisibility(View.GONE);
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

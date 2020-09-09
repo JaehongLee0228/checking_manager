@@ -91,7 +91,7 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
                         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
                         dialog.setMessage("작업 중");
                         dialog.show();
-                        for (DataSnapshot ds : snapshot.getChildren()) {
+                        for (DataSnapshot ds : snapshot.child("position").getChildren()) {
                             String existed_position = ds.getKey();
                             if(position.equals(existed_position)) {
                                 Toast.makeText(registration_page.this, "이미 등록하신 물품의 위치입니다.", Toast.LENGTH_SHORT).show();
@@ -101,8 +101,8 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
                         }
 
                         for(int i = 0; i < adapter.getCount(); i++)
-                            reference.child("stuff").child(stuff).child(position).child("contents").child(i + "").setValue(adapter.getItem(i).getCheck_content());
-                        reference.child("stuff").child(stuff).child(position).child("period").setValue(period);
+                            reference.child("stuff").child(stuff).child("position").child(position).child("contents").child(i + "").setValue(adapter.getItem(i).getCheck_content());
+                        reference.child("stuff").child(stuff).child("position").child(position).child("period").setValue(period);
                         Object howmany_object = snapshot.child("total").getValue();
                         if(!(howmany_object == null)) {
                             int howmany = Integer.parseInt(howmany_object.toString());
