@@ -57,12 +57,26 @@ public class frag_makegroup  extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        String stuff;
+        String pos;
+        String whole;
         if(result != null){
             if(result.getContents() == null){
                 Toast.makeText(getActivity(), "Cancelled", Toast.LENGTH_LONG).show();
             }
             else {
-                Toast.makeText(getActivity(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
+                //Toast.makeText(getActivity(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
+                whole = result.getContents();
+                int idx = whole.indexOf("_");
+                stuff = whole.substring(0, idx);
+                pos = whole.substring(idx+1);
+
+                Intent intent = new Intent(getActivity(), stuff_detail.class);
+                intent.putExtra("stuff_name", stuff);
+                intent.putExtra("pos_name", pos);
+                startActivity(intent);
+
+
             }
         }else{
             super.onActivityResult(requestCode, resultCode, data);

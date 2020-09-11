@@ -11,7 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".registration_page"></activity>
+        <activity android:name=".stuff_detail"></activity>
+        <activity android:name=".registration_page" />
         <activity android:name=".group_searching" />
         <activity android:name=".group_making" />
         <activity android:name=".Before_enter" />
