@@ -57,6 +57,7 @@ public class frag_makegroup  extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data){
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
+        String group;
         String stuff;
         String pos;
         String whole;
@@ -67,13 +68,19 @@ public class frag_makegroup  extends Fragment {
             else {
                 //Toast.makeText(getActivity(), "Scanned : " + result.getContents(), Toast.LENGTH_LONG).show();
                 whole = result.getContents();
-                int idx = whole.indexOf("_");
-                stuff = whole.substring(0, idx);
-                pos = whole.substring(idx+1);
+                //int idx = whole.indexOf("_");
+               // stuff = whole.substring(0, idx);
+                //pos = whole.substring(idx+1);
+
+                String[] s2 = whole.split("_");
+                group = s2[0];
+                stuff = s2[1];
+                pos = s2[2];
 
                 Intent intent = new Intent(getActivity(), stuff_detail.class);
                 intent.putExtra("stuff_name", stuff);
                 intent.putExtra("pos_name", pos);
+                intent.putExtra("group_name", group);
                 startActivity(intent);
 
 

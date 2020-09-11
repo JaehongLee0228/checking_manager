@@ -56,18 +56,18 @@ public class frag_assign  extends Fragment implements OnItemClick{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.frag_trd,container, false);
+        view = inflater.inflate(R.layout.frag_trd, container, false);
 
         Context context = getActivity();
         final SharedPreferences LogInAuto = context.getSharedPreferences("AutoLogIn_SAVE", Context.MODE_PRIVATE);
-        IdAuto = LogInAuto.getString("ID",null);
+        IdAuto = LogInAuto.getString("ID", null);
 
-        group_approval_textView = (TextView)view.findViewById(R.id.group_approval_TextView);
-        approval_listView = (ListView)view.findViewById(R.id.group_approval_listView);
-        member_listView = (ListView)view.findViewById(R.id.member_listView);
-        admin_listView = (ListView)view.findViewById(R.id.admin_listView);
-        withdrawl_button = (Button)view.findViewById(R.id.withdrawl_Button);
-        my_group_name_textView = (TextView)view.findViewById(R.id.tv_groupname);
+        group_approval_textView = (TextView) view.findViewById(R.id.group_approval_TextView);
+        approval_listView = (ListView) view.findViewById(R.id.group_approval_listView);
+        member_listView = (ListView) view.findViewById(R.id.member_listView);
+        admin_listView = (ListView) view.findViewById(R.id.admin_listView);
+        withdrawl_button = (Button) view.findViewById(R.id.withdrawl_Button);
+        my_group_name_textView = (TextView) view.findViewById(R.id.tv_groupname);
 
         group_name = getActivity().getIntent().getExtras().getString("group_name");
         my_group_name_textView.setText(group_name);
