@@ -57,7 +57,7 @@ public class frag_mygroup extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.stuffs_recyclerView);
         manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-        adapter = new stuffRvAdapter();
+        adapter = new stuffRvAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
         if(bundle != null) {

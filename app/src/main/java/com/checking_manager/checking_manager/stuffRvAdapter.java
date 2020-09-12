@@ -1,9 +1,12 @@
 package com.checking_manager.checking_manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,8 +15,10 @@ import java.util.ArrayList;
 public class stuffRvAdapter extends RecyclerView.Adapter<stuff_viewHolder> {
 
     private ArrayList<stuff> mDataList = new ArrayList<stuff>();
+    private Context context;
 
-    public stuffRvAdapter() {
+    public stuffRvAdapter(Context context) {
+        this.context = context;
     }
 
     public stuffRvAdapter(ArrayList<stuff> dataList) {
@@ -35,9 +40,19 @@ public class stuffRvAdapter extends RecyclerView.Adapter<stuff_viewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull stuff_viewHolder viewHolder, int position) {
-        viewHolder.kind_of_stuff.setText(mDataList.get(position).getKind_of_stuff());
-        viewHolder.the_number_of_total.setText(mDataList.get(position).getThe_number_of_total() + "");
-        viewHolder.the_number_of_checked.setText(mDataList.get(position).getThe_number_of_checked() + "");
+        String kind_of_stuff = mDataList.get(position).getKind_of_stuff();
+
+        viewHolder.kind_of_stuff_setText(kind_of_stuff);
+        viewHolder.the_number_of_total_setText(mDataList.get(position).getThe_number_of_total() + "");
+        viewHolder.the_number_of_checked_setText(mDataList.get(position).getThe_number_of_checked() + "");
+
+        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //listener content in here.
+
+            }
+        });
     }
 
     @Override
