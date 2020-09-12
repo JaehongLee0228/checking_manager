@@ -2,6 +2,8 @@ package com.checking_manager.checking_manager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,14 +28,13 @@ import java.util.ArrayList;
 
 public class Before_enter extends AppCompatActivity {
 
-    private ListView listView;
-    private myGroups_listView_adapter adapter;
     private FirebaseDatabase databse;
     private DatabaseReference reference;
     private BackPressCloseHandler backPressCloseHandler;
     private Button logout, make_group, search_group;
-
-
+    private RecyclerView recyclerView;
+    private LinearLayoutManager manager;
+    private myGroupRvAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,19 +48,20 @@ public class Before_enter extends AppCompatActivity {
         String users_ID = LogInAuto.getString("ID",null);
         users_ID = stringReplace(users_ID);
 
-        adapter = new myGroups_listView_adapter();
-        listView = (ListView)findViewById(R.id.included_groups_listView);
         logout = (Button)findViewById(R.id.logout_Button);
         make_group = (Button)findViewById(R.id.group_make_button);
         search_group = (Button)findViewById(R.id.group_search_button);
 
+        recyclerView = (RecyclerView)findViewById(R.id.my_group_recyclerView);
+        manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(manager);
+        adapter = new myGroupRvAdapter(this);
+        recyclerView.setAdapter(adapter);
+
         backPressCloseHandler = new BackPressCloseHandler(this);
-
-
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Members").child(users_ID);
-        listView.setAdapter(adapter);
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -71,7 +73,7 @@ public class Before_enter extends AppCompatActivity {
                     group_status = ds.child("group_status").getValue().toString();
 
                     adapter.addItem(group_name, group_status);
-                    listView.setAdapter(adapter);
+                    adapter.notifyDataSetChanged();
                 }
             }
 
@@ -81,6 +83,7 @@ public class Before_enter extends AppCompatActivity {
             }
         });
 
+        /*
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -95,7 +98,7 @@ public class Before_enter extends AppCompatActivity {
                 intent.putExtra("group_name", group_name);
                 startActivity(intent);
             }
-        });
+        });*/
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,6 +139,5 @@ public class Before_enter extends AppCompatActivity {
         str =str.replaceAll(match, "");
         return str;
     }
-
 
 }

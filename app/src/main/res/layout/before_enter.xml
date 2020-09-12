@@ -38,9 +38,9 @@
         android:layout_margin="10dp"
         android:textColor="#000000"/>
 
-    <ListView
-        android:id="@+id/included_groups_listView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/my_group_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
