@@ -25,12 +25,11 @@ import java.util.ArrayList;
 public class group_searching extends AppCompatActivity {
 
     private Button search_button, join_request;
-    private EditText search_editText;
+    private ClearEditText search_editText;
     private TextView search_result;
 
     private FirebaseDatabase databse;
     private DatabaseReference reference;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +40,7 @@ public class group_searching extends AppCompatActivity {
         final String IdAuto = LogInAuto.getString("ID",null);
 
         search_button = (Button)findViewById(R.id.group_name_search_button);
-        search_editText = (EditText)findViewById(R.id.group_name_search_EditText);
+        search_editText = (ClearEditText) findViewById(R.id.group_name_search_EditText);
         search_result = (TextView)findViewById(R.id.group_search_result_TextView);
         join_request = (Button)findViewById(R.id.searching_group_join_button);
 

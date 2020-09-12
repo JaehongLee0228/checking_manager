@@ -8,10 +8,11 @@
     tools:context=".group_searching">
 
 
-    <EditText
+    <com.checking_manager.checking_manager.ClearEditText
         android:id="@+id/group_name_search_EditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="10dp"
         android:ems="10"
         android:hint="그룹 이름"
         android:inputType="textPersonName" />
