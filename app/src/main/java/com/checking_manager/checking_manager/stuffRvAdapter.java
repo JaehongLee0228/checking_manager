@@ -16,9 +16,11 @@ public class stuffRvAdapter extends RecyclerView.Adapter<stuff_viewHolder> {
 
     private ArrayList<stuff> mDataList = new ArrayList<stuff>();
     private Context context;
+    private OnItemClick mCallback;
 
-    public stuffRvAdapter(Context context) {
+    public stuffRvAdapter(Context context, OnItemClick listener) {
         this.context = context;
+        this.mCallback = listener;
     }
 
     public stuffRvAdapter(ArrayList<stuff> dataList) {
@@ -40,7 +42,7 @@ public class stuffRvAdapter extends RecyclerView.Adapter<stuff_viewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull stuff_viewHolder viewHolder, int position) {
-        String kind_of_stuff = mDataList.get(position).getKind_of_stuff();
+        final String kind_of_stuff = mDataList.get(position).getKind_of_stuff();
 
         viewHolder.kind_of_stuff_setText(kind_of_stuff);
         viewHolder.the_number_of_total_setText(mDataList.get(position).getThe_number_of_total() + "");
@@ -49,8 +51,7 @@ public class stuffRvAdapter extends RecyclerView.Adapter<stuff_viewHolder> {
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //listener content in here.
-
+                mCallback.onClick("to_position_page", kind_of_stuff);
             }
         });
     }

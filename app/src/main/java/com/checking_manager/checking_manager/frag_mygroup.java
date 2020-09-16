@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class frag_mygroup extends Fragment {
+public class frag_mygroup extends Fragment implements OnItemClick{
 
     private View view;
     private FloatingActionButton register_button;
@@ -57,7 +57,7 @@ public class frag_mygroup extends Fragment {
         recyclerView = (RecyclerView)view.findViewById(R.id.stuffs_recyclerView);
         manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-        adapter = new stuffRvAdapter(getActivity());
+        adapter = new stuffRvAdapter(getActivity(), this);
         recyclerView.setAdapter(adapter);
 
         if(bundle != null) {
@@ -89,17 +89,12 @@ public class frag_mygroup extends Fragment {
 
             }
         });
-
         InitializeData();
-
         register_button.setOnClickListener(register_button_onClickListener);
-
         return view;
     }
 
     public void InitializeData() {
-
-
         stuff_reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -129,4 +124,15 @@ public class frag_mygroup extends Fragment {
             startActivity(intent);
         }
     };
+
+    @Override
+    public void onClick(String value, String kind_of_stuff) {
+        if(value.equals("to_position_page")) {
+            Intent intent = new Intent(getActivity(), stuff_position_page.class);
+            intent.putExtra("group_name", group_name);
+            intent.putExtra("group_status", group_status);
+            intent.putExtra("kind_of_stuff", kind_of_stuff);
+            startActivity(intent);
+        }
+    }
 }
