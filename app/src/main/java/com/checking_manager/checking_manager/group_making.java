@@ -74,7 +74,7 @@ public class group_making extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!ready) {
-                    Toast.makeText(getApplicationContext(), "그룹 이름 중복 검사를 해주세요.", Toast.LENGTH_SHORT).cancel();
+                    Toast.makeText(getApplicationContext(), "그룹 이름 중복 검사를 해주세요.", Toast.LENGTH_SHORT).show();
                     return;
                 }
 
@@ -171,11 +171,11 @@ public class group_making extends AppCompatActivity {
         public void onClick(View v) {
             final String group_name = group_name_input.getText().toString();
             if(group_name_input.getText() == null) {
-                Toast.makeText(group_making.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).cancel();
+                Toast.makeText(group_making.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).show();
                 return;
             }
             if(!keyValue_check(group_name)) {
-                Toast.makeText(group_making.this, "그룹 이름에 '.', '#', '$', '[', or ']' 값을 사용하실 수 없습니다.", Toast.LENGTH_SHORT).cancel();
+                Toast.makeText(group_making.this, "그룹 이름에 '.', '#', '$', '[', or ']' 값을 사용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -190,7 +190,7 @@ public class group_making extends AppCompatActivity {
                         return;
                     }
                     if(judge == 0) {
-                        Toast.makeText(group_making.this, "사용할 수 있는 그룹 이름입니다.", Toast.LENGTH_SHORT).cancel();
+                        Toast.makeText(group_making.this, "사용할 수 있는 그룹 이름입니다.", Toast.LENGTH_SHORT).show();
                         ready = true;
                     }
                 }
@@ -209,19 +209,19 @@ public class group_making extends AppCompatActivity {
         public void onClick(View v) {
             String email = member_email_adding.getText().toString();
             if(!checkEmail(email)) {
-                Toast.makeText(group_making.this,"올바른 이메일을 입력해주세요.",Toast.LENGTH_SHORT).cancel();
+                Toast.makeText(group_making.this,"올바른 이메일을 입력해주세요.",Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if(email.equals(users_ID)) {
-                Toast.makeText(group_making.this,"회원님의 아이디입니다.", Toast.LENGTH_SHORT).cancel();
+                Toast.makeText(group_making.this,"회원님의 아이디입니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             for(int i = 0; i < adapter.getCount(); i++) {
                 String temp = adapter.getItem(i).getGroupName();
                 if(temp.equals(email)) {
-                    Toast.makeText(group_making.this,"이미 추가한 멤버입니다.", Toast.LENGTH_SHORT).cancel();
+                    Toast.makeText(group_making.this,"이미 추가한 멤버입니다.", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }
