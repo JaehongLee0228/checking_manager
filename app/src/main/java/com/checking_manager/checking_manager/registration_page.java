@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,8 +33,9 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
     private registrationContentAdapter adapter;
     private FirebaseDatabase database;
     private DatabaseReference reference;
-    private String group_name = "", period = "";
+    private String group_name, period = "", group_status;
     private RadioButton week_radioButton, month_radioButton;
+    private Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
         setContentView(R.layout.registration_page);
 
         group_name = getIntent().getExtras().getString("group_name");
+        group_status = getIntent().getExtras().getString("group_status");
 
         add_button = (Button)findViewById(R.id.registe_add_button);
         position_editText = (EditText)findViewById(R.id.registe_stuff_position);
@@ -53,6 +56,8 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
         adapter = new registrationContentAdapter(this);
         content_listView = (ListView)findViewById(R.id.registe_listView);
         content_listView.setAdapter(adapter);
+
+        context = this;
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Groups").child(group_name);
@@ -119,7 +124,10 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
                             public void run() {
                                 finish();
                                 dialog.dismiss();
-                                startActivity(new Intent(registration_page.this, Main_sum.class));
+                                Intent intent = new Intent(context, Main_sum.class);
+                                intent.putExtra("group_name", group_name);
+                                intent.putExtra("group_status", group_status);
+                                startActivity(intent);
                             }
                         }, 1000);
                     }
@@ -155,10 +163,12 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
         adapter.notifyDataSetChanged();
     }
 
-    public void showProgressDialog() {
-        ProgressDialog dialog = new ProgressDialog(this);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        dialog.setMessage("작업 중");
-        dialog.show();
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(context, Main_sum.class);
+        intent.putExtra("group_name", group_name);
+        intent.putExtra("group_status", group_status);
+        startActivity(intent);
+        finish();
     }
 }

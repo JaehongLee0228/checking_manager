@@ -1,5 +1,6 @@
 package com.checking_manager.checking_manager;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class frag_mygroup extends Fragment implements OnItemClick{
     private stuffRvAdapter adapter;
     private RecyclerView recyclerView;
     private LinearLayoutManager manager;
+    private ProgressDialog dialog;
 
     public static frag_mygroup newinstance(){
         frag_mygroup fragfirst = new frag_mygroup();
@@ -55,6 +57,9 @@ public class frag_mygroup extends Fragment implements OnItemClick{
 
         register_button = (FloatingActionButton)view.findViewById(R.id.register_floatingActionButton);
         recyclerView = (RecyclerView)view.findViewById(R.id.stuffs_recyclerView);
+        dialog = new ProgressDialog(getActivity());
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+
         manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         adapter = new stuffRvAdapter(getActivity(), this);
@@ -72,6 +77,8 @@ public class frag_mygroup extends Fragment implements OnItemClick{
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dialog.setMessage("데이터 불러오는 중");
+                dialog.show();
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     String email = ds.child("email").getValue().toString();
                     Log.d("mygroup_email", email);
@@ -82,6 +89,7 @@ public class frag_mygroup extends Fragment implements OnItemClick{
                         return;
                     }
                 }
+                dialog.dismiss();
             }
 
             @Override
@@ -98,6 +106,8 @@ public class frag_mygroup extends Fragment implements OnItemClick{
         stuff_reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                dialog.setMessage("데이터 불러오는 중");
+                dialog.show();
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     String stuff_name = ds.getKey();
                     int total_number_of = Integer.parseInt(ds.child("total").getValue().toString());
@@ -106,6 +116,7 @@ public class frag_mygroup extends Fragment implements OnItemClick{
                     adapter.addItem(stuff_name, total_number_of, checked_number_of);
                     adapter.notifyDataSetChanged();
                 }
+                dialog.dismiss();
             }
 
             @Override
@@ -122,6 +133,7 @@ public class frag_mygroup extends Fragment implements OnItemClick{
             intent.putExtra("group_name", group_name);
             intent.putExtra("group_status", group_status);
             startActivity(intent);
+            getActivity().finish();
         }
     };
 

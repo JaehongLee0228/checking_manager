@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -35,6 +37,7 @@ public class Before_enter extends AppCompatActivity {
     private RecyclerView recyclerView;
     private LinearLayoutManager manager;
     private myGroupRvAdapter adapter;
+    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +54,6 @@ public class Before_enter extends AppCompatActivity {
         logout = (Button)findViewById(R.id.logout_Button);
         make_group = (Button)findViewById(R.id.group_make_button);
         search_group = (Button)findViewById(R.id.group_search_button);
-
         recyclerView = (RecyclerView)findViewById(R.id.my_group_recyclerView);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
@@ -62,6 +64,11 @@ public class Before_enter extends AppCompatActivity {
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Members").child(users_ID);
+
+        dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("데이터 불러오는 중");
+        dialog.show();
 
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -75,6 +82,7 @@ public class Before_enter extends AppCompatActivity {
                     adapter.addItem(group_name, group_status);
                     adapter.notifyDataSetChanged();
                 }
+                dialog.dismiss();
             }
 
             @Override
@@ -82,23 +90,6 @@ public class Before_enter extends AppCompatActivity {
 
             }
         });
-
-        /*
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                usersGroupsList item = (usersGroupsList)parent.getItemAtPosition(position);
-
-                String group_name = item.getGroupName();
-                String group_status = item.getGroupStatus();
-
-                Intent intent = null;
-                intent = new Intent(Before_enter.this, Main_sum.class);
-                Log.d("fragment_group_name_input", group_name);
-                intent.putExtra("group_name", group_name);
-                startActivity(intent);
-            }
-        });*/
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
