@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -28,7 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class Before_enter extends AppCompatActivity {
+public class Before_enter extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener {
 
     private FirebaseDatabase databse;
     private DatabaseReference reference;
@@ -38,6 +39,7 @@ public class Before_enter extends AppCompatActivity {
     private LinearLayoutManager manager;
     private myGroupRvAdapter adapter;
     private ProgressDialog dialog;
+    private SwipeRefreshLayout refreshLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class Before_enter extends AppCompatActivity {
         String users_ID = LogInAuto.getString("ID",null);
         users_ID = stringReplace(users_ID);
 
+        refreshLayout = (SwipeRefreshLayout)findViewById(R.id.before_enter_swipeLayout);
         logout = (Button)findViewById(R.id.logout_Button);
         make_group = (Button)findViewById(R.id.group_make_button);
         search_group = (Button)findViewById(R.id.group_search_button);
@@ -61,6 +64,7 @@ public class Before_enter extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
+        refreshLayout.setOnRefreshListener(this);
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Members").child(users_ID);
@@ -131,4 +135,36 @@ public class Before_enter extends AppCompatActivity {
         return str;
     }
 
+    @Override
+    public void onRefresh() {
+        dialog = new ProgressDialog(this);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.setMessage("데이터 불러오는 중");
+        dialog.show();
+
+        adapter.clear();
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String group_name;
+                String group_status;
+                for(DataSnapshot ds : snapshot.getChildren()) {
+                    group_name = ds.child("group_name").getValue().toString();
+                    group_status = ds.child("group_status").getValue().toString();
+
+                    adapter.addItem(group_name, group_status);
+                    adapter.notifyDataSetChanged();
+                }
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        refreshLayout.setRefreshing(false);
+    }
 }

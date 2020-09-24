@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -29,7 +30,7 @@ import java.util.ArrayList;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class frag_mygroup extends Fragment implements OnItemClick{
+public class frag_mygroup extends Fragment implements OnItemClick, SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
     private FloatingActionButton register_button;
@@ -40,6 +41,7 @@ public class frag_mygroup extends Fragment implements OnItemClick{
     private RecyclerView recyclerView;
     private LinearLayoutManager manager;
     private ProgressDialog dialog;
+    private SwipeRefreshLayout refreshLayout;
 
     public static frag_mygroup newinstance(){
         frag_mygroup fragfirst = new frag_mygroup();
@@ -55,11 +57,13 @@ public class frag_mygroup extends Fragment implements OnItemClick{
         SharedPreferences LogInAuto= getActivity().getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
         user_ID = LogInAuto.getString("ID",null);
 
+        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.stuffs_swipeLayout);
         register_button = (FloatingActionButton)view.findViewById(R.id.register_floatingActionButton);
         recyclerView = (RecyclerView)view.findViewById(R.id.stuffs_recyclerView);
         dialog = new ProgressDialog(getActivity());
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
+        refreshLayout.setOnRefreshListener(this);
         manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
         adapter = new stuffRvAdapter(getActivity(), this);
@@ -146,5 +150,12 @@ public class frag_mygroup extends Fragment implements OnItemClick{
             intent.putExtra("kind_of_stuff", kind_of_stuff);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onRefresh() {
+        adapter.clear();
+        InitializeData();
+        refreshLayout.setRefreshing(false);
     }
 }

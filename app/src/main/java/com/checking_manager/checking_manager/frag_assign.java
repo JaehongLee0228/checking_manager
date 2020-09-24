@@ -2,6 +2,7 @@ package com.checking_manager.checking_manager;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -157,11 +159,39 @@ public class frag_assign  extends Fragment implements OnItemClick{
         public void onClick(View v) {
             if(my_status.equals("admin")) {
                 if(admin_count == 1) {
-                    Toast.makeText(getActivity(), "관리자가 회원님 뿐입니다.", Toast.LENGTH_SHORT).show();
+                    AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                    dlg.setMessage("관리자가 회원님 뿐입니다. 그룹을 삭제하시겠습니까?");
+                    dlg.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            withdrawl();
+                        }
+                    });
+                    dlg.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    });
+                    dlg.show();
                     return;
                 }
             }
-            withdrawl();
+            AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+            dlg.setMessage("그룹을 탈퇴하시겠습니까?");
+            dlg.setPositiveButton("탈퇴", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    withdrawl();
+                }
+            });
+            dlg.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            dlg.show();
         }
     };
 

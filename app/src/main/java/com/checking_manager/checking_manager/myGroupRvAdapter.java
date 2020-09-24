@@ -65,4 +65,10 @@ public class myGroupRvAdapter extends RecyclerView.Adapter<my_groups_viewHolder>
         usersGroupsList item = new usersGroupsList(group_name, group_status);
         mDataList.add(item);
     }
+
+    public void clear() {
+        int size = mDataList.size();
+        for(int i = 0; i < size; i++)
+            mDataList.remove(0);
+    }
 }

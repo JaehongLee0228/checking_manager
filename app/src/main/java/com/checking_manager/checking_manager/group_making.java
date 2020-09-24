@@ -115,12 +115,13 @@ public class group_making extends AppCompatActivity {
                 reference2.child("Members").child(stringReplace(users_ID)).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int count = 0;
+                        int index = 0;
                         for (DataSnapshot ds : snapshot.getChildren())
-                            count++;
+                            index = Integer.parseInt(ds.getKey().toString());
+                        index++;
 
-                        reference2.child("Members").child(stringReplace(users_ID)).child(count + "").child("group_name").setValue(group_name);
-                        reference2.child("Members").child(stringReplace(users_ID)).child(count + "").child("group_status").setValue("admin");
+                        reference2.child("Members").child(stringReplace(users_ID)).child(index + "").child("group_name").setValue(group_name);
+                        reference2.child("Members").child(stringReplace(users_ID)).child(index + "").child("group_status").setValue("admin");
                     }
 
                     @Override

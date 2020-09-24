@@ -2,6 +2,7 @@ package com.checking_manager.checking_manager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,5 +65,11 @@ public class stuffRvAdapter extends RecyclerView.Adapter<stuff_viewHolder> {
     public void addItem(String stuff_name, int number_of_total, int number_of_checked) {
         stuff item = new stuff(stuff_name, number_of_total, number_of_checked);
         mDataList.add(item);
+    }
+
+    public void clear() {
+        int size = mDataList.size();
+        for(int i = 0; i < size; i++)
+            mDataList.remove(0);
     }
 }

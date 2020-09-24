@@ -5,15 +5,15 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/group_make_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="그룹 만들기"/>
+            android:text="그룹 만들기" />
 
         <Button
             android:id="@+id/group_search_button"
@@ -33,14 +33,21 @@
         android:id="@+id/trial_TextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="가입한 그룹"
-        android:textSize="30sp"
         android:layout_margin="10dp"
-        android:textColor="#000000"/>
+        android:text="가입한 그룹"
+        android:textColor="#000000"
+        android:textSize="30sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/my_group_recyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/before_enter_swipeLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/my_group_recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>
