@@ -28,6 +28,7 @@ public class stuff_position_page extends AppCompatActivity implements OnItemClic
     private positionRvAdapter adapter;
     private LinearLayoutManager manager;
     private SwipeRefreshLayout refreshLayout;
+    private String stuffName="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +39,7 @@ public class stuff_position_page extends AppCompatActivity implements OnItemClic
         group_name = intent.getExtras().getString("group_name");
         group_status = intent.getExtras().getString("group_status");
         kind_of_stuff = intent.getExtras().getString("kind_of_stuff");
+        stuffName = kind_of_stuff;
 
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.stuff_position_swipeLayout);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -81,6 +83,7 @@ public class stuff_position_page extends AppCompatActivity implements OnItemClic
             intent.putExtra("group_name", group_name);
             intent.putExtra("group_status", group_status);
             intent.putExtra("position_string", position_string);
+            intent.putExtra("stuff_name", stuffName);
             startActivity(intent);
         }
     }

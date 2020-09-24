@@ -56,8 +56,8 @@ public class stuff_detail extends AppCompatActivity {
                 /*for(DataSnapshot ds : snapshot.getChildren()){
                     String stuffname = ds.getKey();
 
-                    Log.e("check", String.valueOf(ds));
-                }*/
+                Log.e("check", String.valueOf(ds));
+            }*/
                 Log.e("test", "되나");
                 String result1 = snapshot.child(stuff_name).child("position").child(pos).child("contents").getValue().toString();
                 contentsTV.setText(result1);
