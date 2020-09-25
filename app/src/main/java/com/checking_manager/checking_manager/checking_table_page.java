@@ -1,12 +1,26 @@
 package com.checking_manager.checking_manager;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class checking_table_page extends AppCompatActivity {
 
@@ -14,6 +28,14 @@ public class checking_table_page extends AppCompatActivity {
     private String stuff_name;
     private String pos;
     private String group_name;
+
+
+    ListView listView;
+    List arrayList = new ArrayList();
+    ArrayAdapter arrayAdapter;
+    FirebaseDatabase databaseReference;
+    DatabaseReference reference;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +60,31 @@ public class checking_table_page extends AppCompatActivity {
                 intent.putExtra("pos", pos);
                 intent.putExtra("group_name", group_name);
                 startActivity(intent);
+            }
+        });
+
+
+        databaseReference = FirebaseDatabase.getInstance();
+        reference = databaseReference.getReference().child("Groups").child(group_name).child("stuff").child(stuff_name).child("position").child(pos).child("checked");
+
+        listView=(ListView)findViewById(R.id.checkedListView);
+        arrayAdapter = new ArrayAdapter<String>(this, R.layout.checkedlistview_adapterlayout, arrayList);
+
+        listView.setAdapter(arrayAdapter);
+
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                for(int i = (int) snapshot.getChildrenCount() - 1; i >= 0; --i){
+                    arrayList.add(snapshot.child(Integer.toString(i)).getValue().toString());
+                }
+                arrayAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
 

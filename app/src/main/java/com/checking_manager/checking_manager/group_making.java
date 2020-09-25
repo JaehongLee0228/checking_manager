@@ -53,7 +53,7 @@ public class group_making extends AppCompatActivity {
 
         users_ID = LogInAuto.getString("ID",null);
 
-        view = (View)findViewById(R.id.group_making_view);
+        //view = (View)findViewById(R.id.group_making_view);
         member_add = (Button)findViewById(R.id.group_make_member_add_button);
         make_group_complete = (Button)findViewById(R.id.group_make_complete_button);
         group_name_input = (EditText)findViewById(R.id.group_name_EditText);
