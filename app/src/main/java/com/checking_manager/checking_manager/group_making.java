@@ -19,6 +19,7 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +35,7 @@ public class group_making extends AppCompatActivity {
     private RadioButton admin, member;
     private FirebaseDatabase databse;
     private DatabaseReference reference, reference2;
+    private View view;
 
     private ListView listView;
     private myGroups_listView_adapter adapter;
@@ -51,6 +53,7 @@ public class group_making extends AppCompatActivity {
 
         users_ID = LogInAuto.getString("ID",null);
 
+        view = (View)findViewById(R.id.group_making_view);
         member_add = (Button)findViewById(R.id.group_make_member_add_button);
         make_group_complete = (Button)findViewById(R.id.group_make_complete_button);
         group_name_input = (EditText)findViewById(R.id.group_name_EditText);
@@ -171,7 +174,7 @@ public class group_making extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String group_name = group_name_input.getText().toString();
-            if(group_name_input.getText() == null) {
+            if(group_name_input.getText().toString().equals("")) {
                 Toast.makeText(group_making.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).show();
                 return;
             }

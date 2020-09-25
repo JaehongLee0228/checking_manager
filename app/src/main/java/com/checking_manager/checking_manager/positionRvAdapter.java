@@ -63,9 +63,17 @@ public class positionRvAdapter extends RecyclerView.Adapter<position_viewHolder>
         mDataList.add(item);
     }
 
+    public void remove(int position) {
+        mDataList.remove(position);
+    }
+
     public void clear() {
         int size = mDataList.size();
         for(int i = 0; i < size; i++)
             mDataList.remove(0);
+    }
+
+    public String get_position(int position) {
+        return mDataList.get(position).getPosition();
     }
 }
