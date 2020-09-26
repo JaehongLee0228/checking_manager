@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/checkedlist_tvitem"
     android:textSize="30dp"
-    android:textStyle="bold">
+    android:textStyle="bold"
+    android:gravity="center">
 
 </TextView>

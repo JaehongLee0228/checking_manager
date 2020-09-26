@@ -6,15 +6,19 @@
 
     <ListView
         android:id="@+id/checkedListView"
-        android:layout_width="wrap_content"
-        android:layout_height="450dp" />
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:textAlignment="center"/>
 
     <Button
         android:id="@+id/newQRButton"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="50dp"
         android:text="qr코드 재생성"
         android:textSize="30dp" />
 

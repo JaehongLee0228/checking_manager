@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -29,9 +30,11 @@ public class checking_table_page extends AppCompatActivity {
     private String pos;
     private String group_name;
 
+    private int index;
+    private int pagelength = 2;
 
     ListView listView;
-    List arrayList = new ArrayList();
+    ArrayList arrayList = new ArrayList();
     ArrayAdapter arrayAdapter;
     FirebaseDatabase databaseReference;
     DatabaseReference reference;
@@ -65,7 +68,7 @@ public class checking_table_page extends AppCompatActivity {
 
 
         databaseReference = FirebaseDatabase.getInstance();
-        reference = databaseReference.getReference().child("Groups").child(group_name).child("stuff").child(stuff_name).child("position").child(pos).child("checked");
+        reference = databaseReference.getReference().child("Groups").child(group_name).child("stuff").child(stuff_name).child("position").child(pos);
 
         listView=(ListView)findViewById(R.id.checkedListView);
         arrayAdapter = new ArrayAdapter<String>(this, R.layout.checkedlistview_adapterlayout, arrayList);
@@ -76,8 +79,16 @@ public class checking_table_page extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                for(int i = (int) snapshot.getChildrenCount() - 1; i >= 0; --i){
-                    arrayList.add(snapshot.child(Integer.toString(i)).getValue().toString());
+                index =  Integer.parseInt(snapshot.child("checked_index").getValue().toString());
+
+                for(int i = 1;i <= pagelength; ++i){
+                    if(index >= 0) {
+                        arrayList.add(snapshot.child("checked").child(Integer.toString(index)).getValue().toString());
+                    }
+                    --index;
+                    if(index < 0){
+                        break;
+                    }
                 }
                 arrayAdapter.notifyDataSetChanged();
             }
@@ -85,6 +96,45 @@ public class checking_table_page extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            boolean lastItemVisibleFlag =false;
+
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if(scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE && lastItemVisibleFlag) {
+                    //TODO 화면이 바닥에 닿을때 처리
+                    reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                            for(int i = 1;i <= pagelength; ++i){
+                                if(index >= 0) {
+                                    arrayList.add(snapshot.child("checked").child(Integer.toString(index)).getValue().toString());
+                                }
+                                --index;
+                                if(index < 0){
+                                    break;
+                                }
+                            }
+                            arrayAdapter.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+                }
+
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                lastItemVisibleFlag = (totalItemCount >0) && (firstVisibleItem + visibleItemCount) >= totalItemCount;
             }
         });
 
