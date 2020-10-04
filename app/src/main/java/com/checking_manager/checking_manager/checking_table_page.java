@@ -6,8 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -30,14 +32,16 @@ public class checking_table_page extends AppCompatActivity {
     private String pos;
     private String group_name;
 
+    private Intent intent;
+
     private int index;
     private int pagelength = 2;
 
-    ListView listView;
-    ArrayList arrayList = new ArrayList();
-    ArrayAdapter arrayAdapter;
-    FirebaseDatabase databaseReference;
-    DatabaseReference reference;
+    private ListView listView;
+    private ArrayList arrayList = new ArrayList();
+    private ArrayAdapter arrayAdapter;
+    private FirebaseDatabase databaseReference;
+    private DatabaseReference reference, date_reference;
 
 
     @Override
@@ -45,13 +49,13 @@ public class checking_table_page extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.checking_table_page);
 
-
-        group_name = getIntent().getExtras().getString("group_name");
-        pos = getIntent().getExtras().getString("position_string");
-        stuff_name = getIntent().getExtras().getString("stuff_name");
+        intent = getIntent();
+        group_name = intent.getExtras().getString("group_name");
+        pos = intent.getExtras().getString("position_string");
+        stuff_name = intent.getExtras().getString("stuff_name");
 
         qrBtn = (Button)findViewById(R.id.newQRButton);
-        Toast.makeText(checking_table_page.this, group_name + " " + stuff_name + " " + pos, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(checking_table_page.this, group_name + " " + stuff_name + " " + pos, Toast.LENGTH_SHORT).show();
 
         qrBtn.setOnClickListener(new View.OnClickListener() {
 
@@ -80,6 +84,7 @@ public class checking_table_page extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 index =  Integer.parseInt(snapshot.child("checked_index").getValue().toString());
+                pagelength = index;
 
                 for(int i = 1;i <= pagelength; ++i){
                     if(index >= 0) {
@@ -138,5 +143,44 @@ public class checking_table_page extends AppCompatActivity {
             }
         });
 
+        listView.setOnItemClickListener(date_click_listener);
     }
+
+    ListView.OnItemClickListener date_click_listener = new ListView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            final String date = arrayList.get(position).toString();
+            date_reference = databaseReference.getReference("Checked_Table").child(group_name).child(stuff_name).child(pos);
+
+            date_reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String index = "";
+                    boolean judge = false;
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        index = ds.child("date").getValue().toString();
+                        if (index.equals(date)) {
+                            index = ds.getKey();
+                            judge = true;
+                            break;
+                        }
+                    }
+
+                    if (judge) {
+                        Intent m_intent = new Intent(checking_table_page.this, checked_table.class);
+                        m_intent.putExtra("index", index);
+                        m_intent.putExtra("group_name", group_name);
+                        m_intent.putExtra("pos", pos);
+                        m_intent.putExtra("stuff_name", stuff_name);
+                        startActivity(m_intent);
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
+    };
 }

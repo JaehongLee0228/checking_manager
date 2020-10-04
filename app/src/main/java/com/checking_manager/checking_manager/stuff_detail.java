@@ -49,15 +49,19 @@ public class stuff_detail extends AppCompatActivity {
         posTV.setText(pos);
         groupTV.setText(group_name);
 
+        Log.d("QR_stuff_name", stuff_name);
+        Log.d("QR_pos", pos);
+        Log.d("QR_group_name", group_name);
 
+        /*
         reference.child("stuff").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                /*for(DataSnapshot ds : snapshot.getChildren()){
+                for(DataSnapshot ds : snapshot.getChildren()){
                     String stuffname = ds.getKey();
 
                 Log.e("check", String.valueOf(ds));
-            }*/
+            }
                 Log.e("test", "되나");
                 String result1 = snapshot.child(stuff_name).child("position").child(pos).child("contents").getValue().toString();
                 contentsTV.setText(result1);
@@ -72,7 +76,7 @@ public class stuff_detail extends AppCompatActivity {
 
             }
         });
-
+*/
 
 
     }
