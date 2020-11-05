@@ -111,6 +111,7 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
                             reference.child("stuff").child(stuff).child("position").child(position).child("contents").child(i + "").setValue(adapter.getItem(i).getCheck_content());
                         reference.child("stuff").child(stuff).child("position").child(position).child("period").setValue(period);
                         Object howmany_object = snapshot.child("total").getValue();
+                        Object checked_index_object = snapshot.child("position").child(position).child("checked_index").getValue();
                         if(!(howmany_object == null)) {
                             int howmany = Integer.parseInt(howmany_object.toString());
                             reference.child("stuff").child(stuff).child("total").setValue(++howmany);

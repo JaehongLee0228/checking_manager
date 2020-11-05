@@ -15,7 +15,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".checked_table"></activity>
         <activity android:name=".reQRPage" />
-        <activity android:name=".checking_stuffs" />
         <activity android:name=".checking_table_page" />
         <activity android:name=".stuff_position_page" />
         <activity android:name=".stuff_detail" />
