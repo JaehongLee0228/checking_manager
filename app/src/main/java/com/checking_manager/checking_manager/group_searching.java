@@ -76,13 +76,13 @@ public class group_searching extends AppCompatActivity {
                                 String email = ds.child("email").getValue().toString();
 
                                 if(email.equals(stringReplace(IdAuto))) {
-                                    search_result.setText("이미 가입된 그룹입니다.\n" + result.toString());
+                                    search_result.setText("이미 가입된 그룹입니다.\n");
                                     return;
                                 }
                                 index++;
                             }
                             join_request.setVisibility(View.VISIBLE);
-                            search_result.setText("해당하는 결과를 찾았습니다.\n" + result.toString());
+                            search_result.setText("해당하는 그룹을 찾았습니다.\n");
                         }
                     }
 

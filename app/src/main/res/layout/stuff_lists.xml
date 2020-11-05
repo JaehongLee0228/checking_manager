@@ -9,11 +9,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardBackgroundColor="#ffffff"
+        app:cardBackgroundColor="@color/btn_purple"
         app:cardCornerRadius="5dp"
-        app:cardElevation="15dp"
-        app:contentPadding="15dp" >
+        app:cardElevation="5dp"
+        app:contentPadding="15dp"
+        app:cardUseCompatPadding="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,9 +22,10 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:gravity="center">
 
                 <TextView
                     android:id="@+id/kind_of_stuff"
@@ -32,7 +33,7 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="20sp"
-                    android:textColor="#000000" />
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <LinearLayout
@@ -42,17 +43,19 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="전체 물품 수"
-                    android:textColor="#000000" />
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
 
                 <TextView
                     android:id="@+id/the_number_of_total"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
-                    android:textSize="20sp" />
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:gravity="center"/>
             </LinearLayout>
 
             <LinearLayout
@@ -62,16 +65,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="점검 완료한 물품 수"
-                    android:textColor="#000000"/>
+                    android:textColor="@color/white"
+                    android:gravity="center"/>
                 <TextView
                     android:id="@+id/the_number_of_checked"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>

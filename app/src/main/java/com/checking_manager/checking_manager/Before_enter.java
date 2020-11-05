@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,7 +35,8 @@ public class Before_enter extends AppCompatActivity implements SwipeRefreshLayou
     private FirebaseDatabase databse;
     private DatabaseReference reference;
     private BackPressCloseHandler backPressCloseHandler;
-    private Button logout, make_group, search_group;
+    private Button logout, search_group;
+    private FloatingActionButton make_group;
     private RecyclerView recyclerView;
     private LinearLayoutManager manager;
     private myGroupRvAdapter adapter;
@@ -55,7 +57,7 @@ public class Before_enter extends AppCompatActivity implements SwipeRefreshLayou
 
         refreshLayout = (SwipeRefreshLayout)findViewById(R.id.before_enter_swipeLayout);
         logout = (Button)findViewById(R.id.logout_Button);
-        make_group = (Button)findViewById(R.id.group_make_button);
+        make_group = (FloatingActionButton)findViewById(R.id.group_make_button);
         search_group = (Button)findViewById(R.id.group_search_button);
         recyclerView = (RecyclerView)findViewById(R.id.my_group_recyclerView);
         manager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);

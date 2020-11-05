@@ -9,8 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="10dp">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,17 +18,22 @@
 
             <TextView
                 android:id="@+id/tv_groupname"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="3"
                 android:layout_height="wrap_content"
-                android:textSize="40dp"
-                android:textColor="#000000"/>
+                android:textSize="40sp"
+                android:textColor="@color/white"
+                android:gravity="center"/>
 
             <Button
                 android:id="@+id/withdrawl_Button"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="탈퇴하기" />
+                android:text="탈퇴하기"
+                android:background="@drawable/btn_purple"
+                android:textColor="@drawable/btn_textcolor"
+                android:layout_gravity="center"/>
 
         </LinearLayout>
 
@@ -44,12 +48,12 @@
             android:layout_height="wrap_content"
             android:text="관리자"
             android:textSize="30dp"
-            android:textColor="#000000"/>
+            android:textColor="@color/white"/>
 
             <ListView
                 android:id="@+id/admin_listView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp" />
 
 
         </LinearLayout>
@@ -65,12 +69,12 @@
                 android:layout_height="wrap_content"
                 android:text="멤버"
                 android:textSize="30dp"
-                android:textColor="#000000"/>
+                android:textColor="@color/white"/>
 
             <ListView
                 android:id="@+id/member_listView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="0dp" />
 
         </LinearLayout>
 
@@ -86,12 +90,12 @@
                 android:layout_height="wrap_content"
                 android:text="가입신청"
                 android:textSize="30dp"
-                android:textColor="#000000"/>
+                android:textColor="@color/white"/>
 
             <ListView
                 android:id="@+id/group_approval_listView"
                 android:layout_width="match_parent"
-                android:layout_height="200dp" />
+                android:layout_height="0dp" />
 
 
         </LinearLayout>

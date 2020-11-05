@@ -6,49 +6,97 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".log_in"
+    android:background="@color/back_app"
+    android:padding="15dp"
     android:gravity="center">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checking Helper"
+        android:textColor="@color/white"
+        android:textSize="50sp"
+        android:layout_marginBottom="60dp"/>
 
     <EditText
         android:id="@+id/log_in_ID_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="이메일"
-        android:gravity="center"
-        android:inputType="textEmailAddress" />
+        android:hint="E-mail"
+        android:inputType="textEmailAddress"
+        android:theme="@style/EditTextStyle"
+        style="@style/EditTextStyle"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:layout_marginBottom="8dp"/>
 
     <EditText
         android:id="@+id/log_in_PW_editText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="비밀번호"
-        android:gravity="center"
-        android:inputType="textPassword" />
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:theme="@style/EditTextStyle"
+        style="@style/EditTextStyle"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:layout_marginBottom="16dp"/>
 
     <CheckBox
         android:id="@+id/log_in_autoID_checkBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ID 저장 X" />
+        android:text="Remember ID"
+        android:textColor="@color/et_text"
+        android:buttonTint="@color/et_text"
+        android:layout_marginBottom="4dp"/>
 
     <CheckBox
         android:id="@+id/log_in_autoLogIn_checkBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="자동로그인 사용 X" />
+        android:text="Auto Sign In"
+        android:textColor="@color/et_text"
+        android:buttonTint="@color/et_text"
+        android:layout_marginBottom="50dp"/>
 
     <Button
         android:id="@+id/log_in_signIn_button"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="로그인" />
+        android:text="Sign In"
+        android:background="@drawable/btn_purple"
+        android:textColor="@drawable/btn_textcolor"
+        android:layout_marginBottom="50dp"
+        android:textAllCaps="false"/>
 
-    <Button
-        android:id="@+id/log_in_signUp_button"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="회원가입" />
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New here ? "
+            android:textColor="@color/et_text"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/log_in_signUp_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sign Up"
+            android:textColor="@color/et_text"
+            android:textSize="15sp" />
+
+
+    </LinearLayout>
+
 
 
 </LinearLayout>

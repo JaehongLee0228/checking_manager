@@ -10,9 +10,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
@@ -56,7 +58,7 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
         adapter = new registrationContentAdapter(this);
         content_listView = (ListView)findViewById(R.id.registe_listView);
         content_listView.setAdapter(adapter);
-
+        setListViewHeightBasedOnChildren(content_listView);
         context = this;
 
         database = FirebaseDatabase.getInstance();
@@ -149,6 +151,7 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
             adapter.addItem(content);
             adapter.notifyDataSetChanged();
             content_editText.setText("");
+            setListViewHeightBasedOnChildren(content_listView);
         }
     };
 
@@ -171,4 +174,29 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
         startActivity(intent);
         finish();
     }
+
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            //listItem.measure(0, 0);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+
+        params.height = totalHeight;
+        listView.setLayoutParams(params);
+
+        listView.requestLayout();
+    }
+
 }

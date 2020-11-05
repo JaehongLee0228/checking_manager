@@ -2,23 +2,35 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/group_approval_list"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        />
 
     <Button
         android:id="@+id/group_approval_accept_Button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="승인" />
+        android:text="승인"
+        android:background="@drawable/btn_purple"
+        android:textColor="@drawable/btn_textcolor"
+        android:layout_marginRight="4dp"/>
 
     <Button
         android:id="@+id/group_approval_decline_Button"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
-        android:text="거절" />
+        android:text="거절"
+        android:background="@drawable/btn_purple"
+        android:textColor="@drawable/btn_textcolor"/>
 
 </LinearLayout>
