@@ -4,96 +4,176 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:context=".registration_page"
+    android:background="@color/back_app"
+    android:padding="15dp"
     android:orientation="vertical"
-    tools:context=".registration_page">
+    android:gravity="center">
 
-    <Button
-        android:id="@+id/registe_complete_button"
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="완료" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="물품 종류" />
-
-    <EditText
-        android:id="@+id/registe_kind_of_stuff"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="물품 위치" />
-
-    <EditText
-        android:id="@+id/registe_stuff_position"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="점검해야할 내용" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="점검 주기" />
-
-    <RadioGroup
-        android:orientation="horizontal"
-        android:weightSum="2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <RadioButton
-            android:id="@+id/register_week_radioButton"
-            android:layout_weight="1"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="주간" />
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/register_month_radioButton"
-            android:layout_weight="1"
+
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="월간" />
-    </RadioGroup>
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="3"
-        android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="물품 종류"
+                android:textColor="@color/white"
+                android:textSize="20sp"/>
 
+            <EditText
+                android:id="@+id/registe_kind_of_stuff"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:theme="@style/EditTextStyle"
+                style="@style/EditTextStyle"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+        </LinearLayout>
 
-        <EditText
-            android:id="@+id/registe_check_content_editText"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
-            android:ems="10"
-            android:inputType="textPersonName" />
+            android:orientation="horizontal"
+            android:layout_marginBottom="54dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="물품 위치"
+                android:textColor="@color/white"
+                android:textSize="20sp"/>
+
+            <EditText
+                android:id="@+id/registe_stuff_position"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:theme="@style/EditTextStyle"
+                style="@style/EditTextStyle"
+                android:padding="10dp"
+                android:textSize="20sp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="점검해야할 내용"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:gravity="center"
+            android:layout_marginBottom="4dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_marginBottom="4dp">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:text="점검 주기"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="15sp"/>
+
+            <RadioGroup
+                android:orientation="horizontal"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                style="@style/EditTextStyle"
+                android:theme="@style/EditTextStyle">
+
+                <RadioButton
+                    android:id="@+id/register_week_radioButton"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="주간"
+                    android:textColor="@color/white"
+                    />
+
+                <RadioButton
+                    android:id="@+id/register_month_radioButton"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="월간"
+                    android:textColor="@color/white"
+                    />
+            </RadioGroup>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <EditText
+                android:id="@+id/registe_check_content_editText"
+                android:layout_width="0dp"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:theme="@style/EditTextStyle"
+                style="@style/EditTextStyle"
+                android:padding="10dp"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/registe_add_button"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="ADD"
+                android:background="@drawable/btn_purple"
+                android:textColor="@drawable/btn_textcolor"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"/>
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/registe_listView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
 
         <Button
-            android:id="@+id/registe_add_button"
+            android:id="@+id/registe_complete_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="추가" />
-    </LinearLayout>
-
-    <ListView
-        android:id="@+id/registe_listView"
-        android:layout_width="match_parent"
-        android:layout_height="400dp" />
-
+            android:text="Done"
+            android:background="@drawable/btn_purple"
+            android:textColor="@drawable/btn_textcolor"
+            android:layout_marginTop="40dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:textAllCaps="false"
+            android:layout_gravity="center"/>
+        </LinearLayout>
+    </ScrollView>
 </LinearLayout>

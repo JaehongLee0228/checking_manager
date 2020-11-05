@@ -6,35 +6,110 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/group_making_view"
-    tools:context=".group_making">
+    tools:context=".group_making"
+    android:background="@color/back_app"
+    android:padding="15dp"
+    android:gravity="center">
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/group_name_EditText"
+            android:orientation="vertical"
+            android:gravity="center">
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="그룹 이름"
-                android:inputType="textPersonName" />
+                android:orientation="horizontal"
+                android:layout_marginBottom="50dp">
 
-            <Button
-                android:id="@+id/group_make_groupName_repeat_button"
+                <EditText
+                    android:id="@+id/group_name_EditText"
+                    android:layout_width="0dp"
+                    android:layout_weight="3"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Group Name"
+                    android:inputType="textPersonName"
+                    android:theme="@style/EditTextStyle"
+                    style="@style/EditTextStyle"
+                    android:padding="10dp"
+                    android:textSize="20sp"
+                    />
+
+                <Button
+                    android:id="@+id/group_make_groupName_repeat_button"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:text="Check"
+                    android:background="@drawable/btn_purple"
+                    android:textColor="@drawable/btn_textcolor"
+                    android:textAllCaps="false"/>
+
+            </LinearLayout>
+
+
+            <RadioGroup
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="그룹 이름 중복 확인" />
+                style="@style/EditTextStyle"
+                android:theme="@style/EditTextStyle">
+
+                <RadioButton
+                    android:id="@+id/group_make_admin_radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Admin"
+                    android:textColor="@color/white"/>
+
+                <RadioButton
+                    android:id="@+id/group_make_member_radioButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Member"
+                    android:textColor="@color/white"/>
+            </RadioGroup>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="35dp">
+                <EditText
+                    android:id="@+id/group_make_memberName_EditText"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="3"
+                    android:ems="10"
+                    android:hint="Email"
+                    android:inputType="textEmailAddress"
+                    android:theme="@style/EditTextStyle"
+                    style="@style/EditTextStyle"
+                    android:padding="10dp"
+                    android:textSize="20sp"/>
+
+                <Button
+                    android:id="@+id/group_make_member_add_button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="ADD"
+                    android:background="@drawable/btn_purple"
+                    android:textColor="@drawable/btn_textcolor"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="그룹 멤버" />
+                android:text="Group Member List"
+                android:textColor="@color/white"/>
 
             <ListView
                 android:id="@+id/group_make_addedMember_listView"
@@ -42,49 +117,21 @@
                 android:layout_weight="1"
                 android:scrollbars="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="150dp" >
+                android:layout_height="0dp">
 
             </ListView>
 
-            <EditText
-                android:id="@+id/group_make_memberName_EditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="추가할 멤버 이메일"
-                android:inputType="textEmailAddress" />
-
-            <RadioGroup
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" >
-
-                <RadioButton
-                    android:id="@+id/group_make_admin_radioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="관리자" />
-
-                <RadioButton
-                    android:id="@+id/group_make_member_radioButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="일반 멤버" />
-            </RadioGroup>
-
-            <Button
-                android:id="@+id/group_make_member_add_button"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="멤버 추가하기" />
-
             <Button
                 android:id="@+id/group_make_complete_button"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="그룹 만들기" />
+                android:text="Make Group"
+                android:background="@drawable/btn_purple"
+                android:textColor="@drawable/btn_textcolor"
+                android:layout_marginTop="35dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textAllCaps="false"/>
         </LinearLayout>
     </ScrollView>
 

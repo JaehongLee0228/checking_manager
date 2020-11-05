@@ -158,4 +158,6 @@ public class frag_mygroup extends Fragment implements OnItemClick, SwipeRefreshL
         InitializeData();
         refreshLayout.setRefreshing(false);
     }
+
+
 }

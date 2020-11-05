@@ -3,7 +3,9 @@
     android:id="@+id/before_enter_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/back_app"
+    android:padding="15dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,22 +13,25 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/group_make_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="그룹 만들기" />
-
-        <Button
             android:id="@+id/group_search_button"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="4"
             android:layout_height="wrap_content"
-            android:text="그룹 참가하기" />
+            android:text="Participate in Group"
+            android:background="@drawable/btn_purple"
+            android:textColor="@drawable/btn_textcolor"
+            android:layout_marginRight="8dp"
+            android:textAllCaps="false"/>
 
         <Button
             android:id="@+id/logout_Button"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="로그아웃" />
+            android:text="Logout"
+            android:background="@drawable/btn_purple"
+            android:textColor="@drawable/btn_textcolor"
+            android:textAllCaps="false"/>
 
     </LinearLayout>
 
@@ -35,20 +40,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:text="가입한 그룹"
-        android:textColor="#000000"
+        android:text="My Group"
+        android:textColor="@color/white"
         android:textSize="30sp" />
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/before_enter_swipeLayout"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/my_group_recyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/before_enter_swipeLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="wrap_content">
 
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/my_group_recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/group_make_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="8dp"
+            android:backgroundTint="@color/btn_purple"
+            android:src="@drawable/ic_add" />
+    </FrameLayout>
 
 </LinearLayout>

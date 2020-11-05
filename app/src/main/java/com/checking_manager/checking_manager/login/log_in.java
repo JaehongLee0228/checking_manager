@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checking_manager.checking_manager.BackPressCloseHandler;
@@ -31,7 +33,7 @@ public class log_in extends AppCompatActivity {
     private EditText log_in_ID;
     private EditText log_in_PW;
     private Button log_in_signIn;
-    private Button log_in_signUp;
+    private TextView log_in_signUp;
     private CheckBox log_in_autoLogIn;
     private CheckBox log_in_autoID_fill;
 
@@ -52,13 +54,16 @@ public class log_in extends AppCompatActivity {
 
         log_in_ID = (EditText)findViewById(R.id.log_in_ID_editText);
         log_in_PW = (EditText)findViewById(R.id.log_in_PW_editText);
-        log_in_signUp = (Button)findViewById(R.id.log_in_signUp_button);
+        log_in_signUp = (TextView) findViewById(R.id.log_in_signUp_button);
         log_in_signIn = (Button)findViewById(R.id.log_in_signIn_button);
         log_in_autoLogIn = (CheckBox)findViewById(R.id.log_in_autoLogIn_checkBox);
         log_in_autoID_fill = (CheckBox)findViewById(R.id.log_in_autoID_checkBox);
 
         firebaseAuth = FirebaseAuth.getInstance();
         backPressCloseHandler = new BackPressCloseHandler(this);
+        log_in_signUp.setPaintFlags(log_in_signUp.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+
 
         if(logInAuto > 0)
             auto_logIn_function(IdAuto, PWAuto);
@@ -73,11 +78,9 @@ public class log_in extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    log_in_autoLogIn.setText("자동 로그인 사용 O");
                     autologin = 0;
                 }
                 else {
-                    log_in_autoLogIn.setText("자동로그인 사용 X");
                     autologin = 1;
                 }
             }
@@ -87,10 +90,8 @@ public class log_in extends AppCompatActivity {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    log_in_autoID_fill.setText("ID 저장 사용 O");
                     autoIDfill = 0;
                 } else {
-                    log_in_autoID_fill.setText("ID 저장 사용 X");
                     autoIDfill = 1;
                 }
             }
