@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".log_in"
+    tools:context=".login.log_in"
     android:gravity="center">
 
     <EditText

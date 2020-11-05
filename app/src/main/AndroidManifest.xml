@@ -23,9 +23,9 @@
         <activity android:name=".group_searching" />
         <activity android:name=".group_making" />
         <activity android:name=".Before_enter" />
-        <activity android:name=".sign_up_activity" />
+        <activity android:name=".login.sign_up_activity" />
         <activity android:name=".Main_sum" />
-        <activity android:name=".log_in">
+        <activity android:name=".login.log_in">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
