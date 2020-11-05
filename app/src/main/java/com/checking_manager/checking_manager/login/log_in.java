@@ -18,7 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.checking_manager.checking_manager.BackPressCloseHandler;
-import com.checking_manager.checking_manager.Before_enter;
+import com.checking_manager.checking_manager.My_Groups.Before_enter;
 import com.checking_manager.checking_manager.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

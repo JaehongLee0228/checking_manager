@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.My_Groups;
 
 public class usersGroupsList {
     private String groupName;

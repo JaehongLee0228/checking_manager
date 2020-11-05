@@ -1,12 +1,14 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.group_making;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import com.checking_manager.checking_manager.My_Groups.usersGroupsList;
+import com.checking_manager.checking_manager.R;
 
 import java.util.ArrayList;
 

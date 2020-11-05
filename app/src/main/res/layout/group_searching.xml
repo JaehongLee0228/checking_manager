@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".group_searching"
+    tools:context=".group_searching.group_searching"
     android:background="@color/back_app"
     android:padding="15dp"
     android:gravity="center">

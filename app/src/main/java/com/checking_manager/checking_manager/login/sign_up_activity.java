@@ -75,6 +75,7 @@ public class sign_up_activity extends AppCompatActivity {
                                 user.sendEmailVerification().addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
+                                        reference.child("Verification").child(StringReplace(email_input)).setValue("true");
                                         Toast.makeText(sign_up_activity.this, "이메일 인증을 진행해주세요.", Toast.LENGTH_SHORT).show();
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {

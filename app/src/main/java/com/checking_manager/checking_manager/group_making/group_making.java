@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.group_making;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -21,7 +20,8 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
+import com.checking_manager.checking_manager.My_Groups.Before_enter;
+import com.checking_manager.checking_manager.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -214,7 +214,7 @@ public class group_making extends AppCompatActivity {
     Button.OnClickListener member_add_onClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String email = member_email_adding.getText().toString();
+            final String email = member_email_adding.getText().toString();
             if(!checkEmail(email)) {
                 Toast.makeText(group_making.this,"올바른 이메일을 입력해주세요.",Toast.LENGTH_SHORT).show();
                 return;
@@ -232,6 +232,29 @@ public class group_making extends AppCompatActivity {
                     return;
                 }
             }
+
+            reference2.child("Verification").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Boolean judgement = false;
+                    for(DataSnapshot ds : snapshot.getChildren()) {
+                        String email_list = ds.getKey();
+                        if(email_list.equals(email)) {
+                            judgement = true;
+                            break;
+                        }
+                    }
+                    if(!judgement) {
+                        Toast.makeText(group_making.this,"어플리케이션 사용자가 아닙니다.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
 
             String status = "";
             if(admin.isChecked())

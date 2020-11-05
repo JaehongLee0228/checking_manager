@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/group_making_view"
-    tools:context=".group_making"
+    tools:context=".group_making.group_making"
     android:background="@color/back_app"
     android:padding="15dp"
     android:gravity="center">

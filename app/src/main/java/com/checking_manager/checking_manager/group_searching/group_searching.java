@@ -1,26 +1,22 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.group_searching;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.checking_manager.checking_manager.ClearEditText;
+import com.checking_manager.checking_manager.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
 
 public class group_searching extends AppCompatActivity {
 
@@ -75,7 +71,7 @@ public class group_searching extends AppCompatActivity {
                             for(DataSnapshot ds : snapshot.child("members").getChildren()) {
                                 String email = ds.child("email").getValue().toString();
 
-                                if(email.equals(stringReplace(IdAuto))) {
+                                if(email.equals(IdAuto)) {
                                     search_result.setText("이미 가입된 그룹입니다.\n");
                                     return;
                                 }
@@ -102,27 +98,18 @@ public class group_searching extends AppCompatActivity {
                 reference.child(search_group_name).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        int count=  0;
+                        int index = 0;
                         for(DataSnapshot ds : snapshot.child("approval").getChildren()) {
-                            String email = ds.child(count + "").getValue().toString();
-                            if(email.equals(stringReplace(IdAuto))) {
+                            String email = ds.getValue().toString();
+                            if(email.equals(IdAuto)) {
                                 Toast.makeText(group_searching.this,"이미 신청하신 그룹입니다.", Toast.LENGTH_SHORT).show();
                                 return;
                             }
-                            count++;
+                            index = Integer.parseInt(ds.getKey());
                         }
-                        if(count != 0){
-                            int index = 0;
-                            while(true) {
-                                Object result = snapshot.child("approval").child(index + "").getValue();
-                                if(result != null){
-                                    reference.child(search_group_name).child("approval").child(index + "").setValue(IdAuto);
-                                    break;
-                                }
-                                else index++;
-                            }
-                        }
-                        else reference.child(search_group_name).child("approval").child("0").setValue(IdAuto);
+                        index++;
+                        reference.child(search_group_name).child("approval").child(index + "").setValue(IdAuto);
+
                         Toast.makeText(group_searching.this, "신청되었습니다.", Toast.LENGTH_SHORT).show();
                         finish();
                     }

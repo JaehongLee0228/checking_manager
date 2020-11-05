@@ -1,10 +1,12 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.My_Groups;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checking_manager.checking_manager.R;
 
 public class my_groups_viewHolder extends RecyclerView.ViewHolder {
 
