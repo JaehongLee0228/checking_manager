@@ -9,11 +9,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardBackgroundColor="#ffffff"
+        app:cardBackgroundColor="@color/btn_purple"
         app:cardCornerRadius="5dp"
-        app:cardElevation="15dp"
-        app:contentPadding="15dp" >
+        app:cardElevation="5dp"
+        app:contentPadding="15dp"
+        app:cardUseCompatPadding="true" >
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,17 +22,18 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/position_lists_textView"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:layout_height="match_parent"
                     android:textSize="20sp"
-                    android:textColor="#000000" />
+                    android:textColor="@color/white"
+                    android:layout_gravity="center"
+                    android:gravity="center"/>
             </LinearLayout>
 
             <LinearLayout
@@ -47,13 +48,13 @@
                     android:text="마지막 점검일"
                     android:layout_gravity="center"
                     android:gravity="center"
-                    android:textColor="#000000" />
+                    android:textColor="@color/white" />
 
                 <TextView
                     android:id="@+id/position_lists_checked_complete"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:textSize="20sp" />

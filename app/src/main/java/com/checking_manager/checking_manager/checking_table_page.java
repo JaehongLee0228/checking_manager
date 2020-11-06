@@ -5,14 +5,18 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
@@ -79,6 +83,7 @@ public class checking_table_page extends AppCompatActivity {
 
         listView.setAdapter(arrayAdapter);
 
+
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -96,6 +101,7 @@ public class checking_table_page extends AppCompatActivity {
                     }
                 }
                 arrayAdapter.notifyDataSetChanged();
+
             }
 
             @Override
@@ -183,4 +189,6 @@ public class checking_table_page extends AppCompatActivity {
             });
         }
     };
+
+
 }

@@ -6,7 +6,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".stuff_position_page">
+    tools:context=".stuff_position_page"
+    android:background="@color/back_app"
+    android:padding="15dp">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/stuff_position_swipeLayout"

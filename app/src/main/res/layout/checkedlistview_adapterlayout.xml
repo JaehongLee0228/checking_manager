@@ -5,6 +5,8 @@
     android:id="@+id/checkedlist_tvitem"
     android:textSize="30dp"
     android:textStyle="bold"
-    android:gravity="center">
+    android:gravity="center"
+    android:textColor="@drawable/btn_textcolor"
+    android:layout_marginBottom="5dp">
 
 </TextView>
