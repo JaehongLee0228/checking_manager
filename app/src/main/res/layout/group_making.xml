@@ -53,6 +53,12 @@
             </LinearLayout>
 
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Add Member Directly"
+                android:textColor="@color/white"/>
+
             <RadioGroup
                 android:orientation="horizontal"
                 android:layout_width="match_parent"

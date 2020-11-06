@@ -148,11 +148,14 @@ public class registration_page extends AppCompatActivity implements OnItemClick 
         @Override
         public void onClick(View v) {
             String content = content_editText.getText().toString();
-
-            adapter.addItem(content);
-            adapter.notifyDataSetChanged();
-            content_editText.setText("");
-            setListViewHeightBasedOnChildren(content_listView);
+            if(content.equals("")){
+                Toast.makeText(registration_page.this, "점검 내용을 입력해주세요.", Toast.LENGTH_SHORT).show();
+            }else {
+                adapter.addItem(content);
+                adapter.notifyDataSetChanged();
+                content_editText.setText("");
+                setListViewHeightBasedOnChildren(content_listView);
+            }
         }
     };
 

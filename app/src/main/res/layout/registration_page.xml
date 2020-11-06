@@ -33,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:text="물품 종류"
                 android:textColor="@color/white"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/registe_kind_of_stuff"
@@ -60,7 +61,8 @@
                 android:layout_weight="1"
                 android:text="물품 위치"
                 android:textColor="@color/white"
-                android:textSize="20sp"/>
+                android:textSize="20sp"
+                android:gravity="center"/>
 
             <EditText
                 android:id="@+id/registe_stuff_position"
@@ -82,7 +84,7 @@
             android:textColor="@color/white"
             android:textSize="25sp"
             android:gravity="center"
-            android:layout_marginBottom="4dp"/>
+            android:layout_marginBottom="10dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,19 +133,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:layout_marginBottom="20dp"
             >
 
             <EditText
                 android:id="@+id/registe_check_content_editText"
                 android:layout_width="0dp"
-                android:layout_weight="3"
+                android:layout_weight="4.5"
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:theme="@style/EditTextStyle"
                 style="@style/EditTextStyle"
                 android:padding="10dp"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:layout_margin="4dp"
+                android:gravity="center"
+                android:layout_marginRight="8dp"/>
 
             <Button
                 android:id="@+id/registe_add_button"
@@ -154,7 +160,8 @@
                 android:background="@drawable/btn_purple"
                 android:textColor="@drawable/btn_textcolor"
                 android:paddingLeft="20dp"
-                android:paddingRight="20dp"/>
+                android:paddingRight="20dp"
+                android:layout_gravity="center"/>
         </LinearLayout>
 
         <ListView
