@@ -80,7 +80,13 @@ public class checking_table_page extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                index =  Integer.parseInt(snapshot.child("checked_index").getValue().toString());
+                Object checked_index_object = snapshot.child("checked_index").getValue();
+                if(checked_index_object == null) {
+                    arrayList.add("점검기록이 없습니다.");
+                    arrayAdapter.notifyDataSetChanged();
+                    return;
+                }
+                index =  Integer.parseInt(checked_index_object.toString());
                 pagelength = index;
 
                 for(int i = 1;i <= pagelength; ++i){
