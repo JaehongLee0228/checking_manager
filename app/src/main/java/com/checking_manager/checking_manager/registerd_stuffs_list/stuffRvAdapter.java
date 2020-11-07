@@ -72,4 +72,12 @@ public class stuffRvAdapter extends RecyclerView.Adapter<stuff_viewHolder> {
         for(int i = 0; i < size; i++)
             mDataList.remove(0);
     }
+
+    public void removeItem(int position) {
+        mDataList.remove(position);
+    }
+
+    public String get_stuff_name(int position) {
+        return mDataList.get(position).getKind_of_stuff();
+    }
 }

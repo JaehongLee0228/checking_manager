@@ -1,6 +1,7 @@
 package com.checking_manager.checking_manager;
 
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -8,15 +9,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.checking_manager.checking_manager.group_making.group_making;
 import com.checking_manager.checking_manager.register_new_stuff.registration_page;
+import com.checking_manager.checking_manager.registerd_stuffs_list.StuffOnItemClickListener;
 import com.checking_manager.checking_manager.registerd_stuffs_list.stuffRvAdapter;
 import com.checking_manager.checking_manager.stuff_positions_list.stuff_position_page;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -101,6 +106,37 @@ public class frag_mygroup extends Fragment implements OnItemClick, SwipeRefreshL
         });
         InitializeData();
         register_button.setOnClickListener(register_button_onClickListener);
+
+        recyclerView.addOnItemTouchListener(new StuffOnItemClickListener(getActivity(), recyclerView,
+                new StuffOnItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View v, int position) {
+
+                    }
+
+                    @Override
+                    public void onItemLongClick(View v, final int position) {
+                        AlertDialog.Builder dlg = new AlertDialog.Builder(getActivity());
+                        dlg.setMessage("이 장비를 삭제하시겠습니까?");
+                        dlg.setPositiveButton("삭제", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String stuff_name = adapter.get_stuff_name(position);
+                                stuff_reference.child(stuff_name).removeValue();
+                                adapter.removeItem(position);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                        dlg.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        dlg.show();
+                    }
+                }));
+
         return view;
     }
 
