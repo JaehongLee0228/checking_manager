@@ -51,21 +51,21 @@ public class group_making extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.group_making);
 
-        SharedPreferences LogInAuto=getSharedPreferences("AutoLogIn_SAVE",MODE_PRIVATE);
+        SharedPreferences LogInAuto = getSharedPreferences("AutoLogIn_SAVE", MODE_PRIVATE);
 
-        users_ID = LogInAuto.getString("ID",null);
+        users_ID = LogInAuto.getString("ID", null);
 
-        view = (View)findViewById(R.id.group_making_view);
-        member_add = (Button)findViewById(R.id.group_make_member_add_button);
-        make_group_complete = (Button)findViewById(R.id.group_make_complete_button);
-        group_name_input = (EditText)findViewById(R.id.group_name_EditText);
-        member_email_adding = (EditText)findViewById(R.id.group_make_memberName_EditText);
-        admin = (RadioButton)findViewById(R.id.group_make_admin_radioButton);
-        member = (RadioButton)findViewById(R.id.group_make_member_radioButton);
-        group_name_repeat = (Button)findViewById(R.id.group_make_groupName_repeat_button);
+        view = (View) findViewById(R.id.group_making_view);
+        member_add = (Button) findViewById(R.id.group_make_member_add_button);
+        make_group_complete = (Button) findViewById(R.id.group_make_complete_button);
+        group_name_input = (EditText) findViewById(R.id.group_name_EditText);
+        member_email_adding = (EditText) findViewById(R.id.group_make_memberName_EditText);
+        admin = (RadioButton) findViewById(R.id.group_make_admin_radioButton);
+        member = (RadioButton) findViewById(R.id.group_make_member_radioButton);
+        group_name_repeat = (Button) findViewById(R.id.group_make_groupName_repeat_button);
 
         adapter = new myGroups_listView_adapter();
-        listView = (ListView)findViewById(R.id.group_make_addedMember_listView);
+        listView = (ListView) findViewById(R.id.group_make_addedMember_listView);
 
         databse = FirebaseDatabase.getInstance();
         reference = databse.getReference("Groups");
@@ -156,7 +156,7 @@ public class group_making extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         int checked = listView.getCheckedItemPosition();
-                        if(checked > -1 && checked < adapter.getCount()) {
+                        if (checked > -1 && checked < adapter.getCount()) {
                             adapter.removeItem(position);
                             adapter.notifyDataSetChanged();
                         }
@@ -177,11 +177,11 @@ public class group_making extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             final String group_name = group_name_input.getText().toString();
-            if(group_name_input.getText().toString().equals("")) {
-                Toast.makeText(group_making.this,"그룹 이름을 입력해주세요.",  Toast.LENGTH_SHORT).show();
+            if (group_name_input.getText().toString().equals("")) {
+                Toast.makeText(group_making.this, "그룹 이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
                 return;
             }
-            if(!keyValue_check(group_name)) {
+            if (!keyValue_check(group_name)) {
                 Toast.makeText(group_making.this, "그룹 이름에 '.', '#', '$', '[', or ']' 값을 사용하실 수 없습니다.", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -191,12 +191,12 @@ public class group_making extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     int judge = 0;
                     Object result = snapshot.child("group_name").getValue();
-                    if(result != null) {
-                        Toast.makeText(group_making.this,"이미 존재하는 그룹 이름입니다.",Toast.LENGTH_SHORT).show();
+                    if (result != null) {
+                        Toast.makeText(group_making.this, "이미 존재하는 그룹 이름입니다.", Toast.LENGTH_SHORT).show();
                         judge = 1;
                         return;
                     }
-                    if(judge == 0) {
+                    if (judge == 0) {
                         Toast.makeText(group_making.this, "사용할 수 있는 그룹 이름입니다.", Toast.LENGTH_SHORT).show();
                         ready = true;
                     }
@@ -214,38 +214,59 @@ public class group_making extends AppCompatActivity {
     Button.OnClickListener member_add_onClickListener = new Button.OnClickListener() {
         @Override
         public void onClick(View v) {
+            final ProgressDialog dialog = new ProgressDialog(group_making.this);
+            dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            dialog.setMessage("작업 중");
+            dialog.show();
+
+            final boolean[] judgement = {false};
             final String email = member_email_adding.getText().toString();
-            if(!checkEmail(email)) {
-                Toast.makeText(group_making.this,"올바른 이메일을 입력해주세요.",Toast.LENGTH_SHORT).show();
+            if (!checkEmail(email)) {
+                Toast.makeText(group_making.this, "올바른 이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
                 return;
             }
 
-            if(email.equals(users_ID)) {
-                Toast.makeText(group_making.this,"회원님의 아이디입니다.", Toast.LENGTH_SHORT).show();
+            if (email.equals(users_ID)) {
+                Toast.makeText(group_making.this, "회원님의 아이디입니다.", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
                 return;
             }
 
-            for(int i = 0; i < adapter.getCount(); i++) {
+            for (int i = 0; i < adapter.getCount(); i++) {
                 String temp = adapter.getItem(i).getGroupName();
-                if(temp.equals(email)) {
-                    Toast.makeText(group_making.this,"이미 추가한 멤버입니다.", Toast.LENGTH_SHORT).show();
+                if (temp.equals(email)) {
+                    Toast.makeText(group_making.this, "이미 추가한 멤버입니다.", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
                     return;
                 }
+            }
+
+            String status = "";
+            if (admin.isChecked())
+                status = "admin";
+            else if (member.isChecked())
+                status = "member";
+            else {
+                Toast.makeText(group_making.this, "관리자인지 일반멤버인지 선택해주세요.", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                return;
             }
 
             reference2.child("Verification").addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    Boolean judgement = false;
-                    for(DataSnapshot ds : snapshot.getChildren()) {
+                    String trimmed_email = stringReplace(email);
+                    for (DataSnapshot ds : snapshot.getChildren()) {
                         String email_list = ds.getKey();
-                        if(email_list.equals(email)) {
-                            judgement = true;
+                        if (email_list.equals(trimmed_email)) {
+                            judgement[0] = true;
                             break;
                         }
                     }
-                    if(!judgement) {
-                        Toast.makeText(group_making.this,"어플리케이션 사용자가 아닙니다.", Toast.LENGTH_SHORT).show();
+                    if (!judgement[0]) {
+                        Toast.makeText(group_making.this, "어플리케이션 사용자가 아닙니다.", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                         return;
                     }
                 }
@@ -256,21 +277,21 @@ public class group_making extends AppCompatActivity {
                 }
             });
 
-            String status = "";
-            if(admin.isChecked())
-                status = "admin";
-            else if(member.isChecked())
-                status = "member";
-            else {
-                Toast.makeText(group_making.this, "관리자인지 일반멤버인지 선택해주세요.", Toast.LENGTH_SHORT).show();
-                return;
-            }
+            Handler mHandler = new Handler();
+            final String finalStatus = status;
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(judgement[0]) {
+                        adapter.addItem(email, finalStatus);
+                        adapter.notifyDataSetChanged();
+                        setListViewHeightBasedOnChildren(listView);
 
-            adapter.addItem(email, status);
-            adapter.notifyDataSetChanged();
-            setListViewHeightBasedOnChildren(listView);
-
-            member_email_adding.setText("");
+                        member_email_adding.setText("");
+                        dialog.dismiss();
+                    }
+                }
+            }, 1000);
         }
     };
 
@@ -288,9 +309,9 @@ public class group_making extends AppCompatActivity {
         return EMAIL_ADDRESS_PATTERN.matcher(email).matches();
     }
 
-    public static String stringReplace(String str){
+    public static String stringReplace(String str) {
         String match = "[^\uAC00-\uD7A3xfe0-9a-zA-Z]";
-        str =str.replaceAll(match, "");
+        str = str.replaceAll(match, "");
         return str;
     }
 
@@ -301,7 +322,7 @@ public class group_making extends AppCompatActivity {
     }
 
     public boolean keyValue_check(String group_name) {
-        for(int i = 0; i < group_name.length(); i++) {
+        for (int i = 0; i < group_name.length(); i++) {
             char temp = group_name.charAt(i);
             if (temp == '.' || temp == '#' || temp == '$' || temp == '[' || temp == ']')
                 return false;
