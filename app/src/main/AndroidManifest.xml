@@ -13,16 +13,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".checked_list.checked_table"></activity>
+        <activity android:name=".checking_sequence.checking_page_showresult"></activity>
+        <activity android:name=".checking_sequence.checking_page2" />
+        <activity android:name=".checking_sequence.checking_Page" />
+        <activity android:name=".checked_list.checked_table" />
         <activity android:name=".reQRPage" />
         <activity android:name=".checking_table_page" />
         <activity android:name=".stuff_positions_list.stuff_position_page" />
-        <activity android:name=".stuff_detail" />
         <activity android:name=".register_new_stuff.registration_page" />
-        <activity android:name=".group_searching.group_searching" android:windowSoftInputMode="stateVisible|adjustResize"/>
+        <activity
+            android:name=".group_searching.group_searching"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".group_making.group_making" />
         <activity android:name=".My_Groups.Before_enter" />
-        <activity android:name=".login.sign_up_activity" android:windowSoftInputMode="stateVisible|adjustResize" />
+        <activity
+            android:name=".login.sign_up_activity"
+            android:windowSoftInputMode="stateVisible|adjustResize" />
         <activity android:name=".Main_sum" />
         <activity android:name=".login.log_in">
             <intent-filter>

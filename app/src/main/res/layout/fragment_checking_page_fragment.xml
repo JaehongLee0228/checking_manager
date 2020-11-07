@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".checking_sequence.checking_page_fragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/checkingPageQuestion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp">
+
+        <RadioGroup
+            android:id="@+id/checkingPageRadioGroup"
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <RadioButton
+                android:layout_weight="1"
+                android:text="좋음"
+                android:id="@+id/checkingPageBtn1"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"/>
+
+            <RadioButton
+                android:layout_weight="1"
+                android:text="보통"
+                android:id="@+id/checkingPageBtn2"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"/>
+
+            <RadioButton
+                android:layout_weight="1"
+                android:text="나쁨"
+                android:id="@+id/checkingPageBtn3"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation = "horizontal">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:id="@+id/checkingPageEditText"
+            android:layout_weight="1"
+            android:ems="10"
+            android:hint="특이사항을 입력하시오"
+            android:maxLength="1000"
+            android:text="없음"/>
+
+        <Button
+            android:id="@+id/checkingPageCorrectBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="수정"
+            android:layout_marginTop="100dp"/>
+
+        <Button
+            android:id="@+id/checkingPageReadyBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="완료"
+            android:layout_marginTop="100dp"/>
+
+
+    </LinearLayout>
+
+</FrameLayout>

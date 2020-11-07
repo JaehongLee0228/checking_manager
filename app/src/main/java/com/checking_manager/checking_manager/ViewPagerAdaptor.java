@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.checking_manager.checking_manager.checking_sequence.frag_makegroup;
 import com.checking_manager.checking_manager.group_information.frag_assign;
 import com.checking_manager.checking_manager.registerd_stuffs_list.frag_mygroup;
 

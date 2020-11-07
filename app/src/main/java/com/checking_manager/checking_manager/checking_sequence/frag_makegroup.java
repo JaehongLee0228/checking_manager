@@ -1,6 +1,5 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.checking_sequence;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,8 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 
+import com.checking_manager.checking_manager.R;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
@@ -74,10 +73,10 @@ public class frag_makegroup  extends Fragment {
 
                 String[] s2 = whole.split("_");
                 group = s2[0];
-                stuff = s2[1];
-                pos = s2[2];
+                stuff = s2[2];
+                pos = s2[1];
 
-                Intent intent = new Intent(getActivity(), stuff_detail.class);
+                Intent intent = new Intent(getActivity(), checking_Page.class);
                 intent.putExtra("stuff_name", stuff);
                 intent.putExtra("pos_name", pos);
                 intent.putExtra("group_name", group);
