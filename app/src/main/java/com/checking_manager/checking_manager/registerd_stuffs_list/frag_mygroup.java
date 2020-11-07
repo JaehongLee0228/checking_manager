@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.registerd_stuffs_list;
 
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -9,7 +9,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,10 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import com.checking_manager.checking_manager.group_making.group_making;
+import com.checking_manager.checking_manager.R;
+import com.checking_manager.checking_manager.RecyclerViewOnItemClickListener;
 import com.checking_manager.checking_manager.register_new_stuff.registration_page;
-import com.checking_manager.checking_manager.registerd_stuffs_list.StuffOnItemClickListener;
-import com.checking_manager.checking_manager.registerd_stuffs_list.stuffRvAdapter;
 import com.checking_manager.checking_manager.stuff_positions_list.stuff_position_page;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -33,7 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class frag_mygroup extends Fragment implements OnItemClick, SwipeRefreshLayout.OnRefreshListener {
+public class frag_mygroup extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     private View view;
     private FloatingActionButton register_button;
@@ -69,7 +67,7 @@ public class frag_mygroup extends Fragment implements OnItemClick, SwipeRefreshL
         refreshLayout.setOnRefreshListener(this);
         manager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(manager);
-        adapter = new stuffRvAdapter(getActivity(), this);
+        adapter = new stuffRvAdapter(getActivity());
         recyclerView.setAdapter(adapter);
 
         if(bundle != null) {
@@ -107,11 +105,16 @@ public class frag_mygroup extends Fragment implements OnItemClick, SwipeRefreshL
         InitializeData();
         register_button.setOnClickListener(register_button_onClickListener);
 
-        recyclerView.addOnItemTouchListener(new StuffOnItemClickListener(getActivity(), recyclerView,
-                new StuffOnItemClickListener.OnItemClickListener() {
+        recyclerView.addOnItemTouchListener(new RecyclerViewOnItemClickListener(getActivity(), recyclerView,
+                new RecyclerViewOnItemClickListener.OnItemClickListener() {
                     @Override
                     public void onItemClick(View v, int position) {
-
+                        String stuff_name = adapter.get_stuff_name(position);
+                        Intent intent = new Intent(getActivity(), stuff_position_page.class);
+                        intent.putExtra("group_name", group_name);
+                        intent.putExtra("group_status", group_status);
+                        intent.putExtra("kind_of_stuff", stuff_name);
+                        startActivity(intent);
                     }
 
                     @Override
@@ -174,17 +177,6 @@ public class frag_mygroup extends Fragment implements OnItemClick, SwipeRefreshL
             getActivity().finish();
         }
     };
-
-    @Override
-    public void onClick(String value, String kind_of_stuff) {
-        if(value.equals("to_position_page")) {
-            Intent intent = new Intent(getActivity(), stuff_position_page.class);
-            intent.putExtra("group_name", group_name);
-            intent.putExtra("group_status", group_status);
-            intent.putExtra("kind_of_stuff", kind_of_stuff);
-            startActivity(intent);
-        }
-    }
 
     @Override
     public void onRefresh() {

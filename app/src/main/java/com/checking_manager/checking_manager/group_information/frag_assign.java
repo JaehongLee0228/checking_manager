@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.group_information;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -25,8 +25,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.checking_manager.checking_manager.My_Groups.Before_enter;
-import com.checking_manager.checking_manager.group_information.groupApprovalAdapter;
-import com.checking_manager.checking_manager.group_information.memberInGroupListAdapter;
+import com.checking_manager.checking_manager.OnItemClick;
+import com.checking_manager.checking_manager.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class frag_assign  extends Fragment implements OnItemClick{
+public class frag_assign  extends Fragment implements OnItemClick {
 
     private View view;
     private TextView my_group_name_textView, group_approval_textView;

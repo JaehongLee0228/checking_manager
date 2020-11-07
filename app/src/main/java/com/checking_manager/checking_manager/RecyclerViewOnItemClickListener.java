@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager.registerd_stuffs_list;
+package com.checking_manager.checking_manager;
 
 import android.content.Context;
 import android.view.GestureDetector;
@@ -9,12 +9,12 @@ import android.widget.AdapterView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class StuffOnItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
+public class RecyclerViewOnItemClickListener extends RecyclerView.SimpleOnItemTouchListener {
 
     private OnItemClickListener listener;
     private GestureDetector gestureDetector;
 
-    public StuffOnItemClickListener(Context context, final RecyclerView recyclerView, final OnItemClickListener listener) {
+    public RecyclerViewOnItemClickListener(Context context, final RecyclerView recyclerView, final OnItemClickListener listener) {
         this.listener = listener;
 
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {

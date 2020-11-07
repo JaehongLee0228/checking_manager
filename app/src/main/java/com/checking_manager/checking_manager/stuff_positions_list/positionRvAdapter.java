@@ -19,6 +19,10 @@ public class positionRvAdapter extends RecyclerView.Adapter<position_viewHolder>
     private Context context;
     private OnItemClick mCallback;
 
+    public positionRvAdapter(Context context) {
+        this.context = context;
+    }
+
     public positionRvAdapter(Context context, OnItemClick listener) {
         this.context = context;
         this.mCallback = listener;
@@ -79,4 +83,5 @@ public class positionRvAdapter extends RecyclerView.Adapter<position_viewHolder>
     public String get_position(int position) {
         return mDataList.get(position).getPosition();
     }
+
 }

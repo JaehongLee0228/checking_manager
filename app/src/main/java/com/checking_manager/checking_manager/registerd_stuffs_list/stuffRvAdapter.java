@@ -19,6 +19,10 @@ public class stuffRvAdapter extends RecyclerView.Adapter<stuff_viewHolder> {
     private Context context;
     private OnItemClick mCallback;
 
+    public stuffRvAdapter(Context context) {
+        this.context = context;
+    }
+
     public stuffRvAdapter(Context context, OnItemClick listener) {
         this.context = context;
         this.mCallback = listener;
