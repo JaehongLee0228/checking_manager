@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.registerd_stuffs_list;
 
 public class stuff {
 

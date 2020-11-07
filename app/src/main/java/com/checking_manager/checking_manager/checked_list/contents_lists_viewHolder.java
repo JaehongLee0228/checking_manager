@@ -1,10 +1,12 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.checked_list;
 
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.checking_manager.checking_manager.R;
 
 public class contents_lists_viewHolder extends RecyclerView.ViewHolder {
 

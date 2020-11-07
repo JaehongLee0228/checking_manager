@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.register_new_stuff;
 
 public class registrationContentList {
 

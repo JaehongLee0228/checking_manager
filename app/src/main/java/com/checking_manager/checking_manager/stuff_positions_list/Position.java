@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.stuff_positions_list;
 
 public class Position {
 

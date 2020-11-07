@@ -1,4 +1,4 @@
-package com.checking_manager.checking_manager;
+package com.checking_manager.checking_manager.register_new_stuff;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,7 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import com.checking_manager.checking_manager.OnItemClick;
+import com.checking_manager.checking_manager.R;
 
 import java.util.ArrayList;
 

@@ -13,12 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".checked_table"></activity>
+        <activity android:name=".checked_list.checked_table"></activity>
         <activity android:name=".reQRPage" />
         <activity android:name=".checking_table_page" />
-        <activity android:name=".stuff_position_page" />
+        <activity android:name=".stuff_positions_list.stuff_position_page" />
         <activity android:name=".stuff_detail" />
-        <activity android:name=".registration_page" />
+        <activity android:name=".register_new_stuff.registration_page" />
         <activity android:name=".group_searching.group_searching" android:windowSoftInputMode="stateVisible|adjustResize"/>
         <activity android:name=".group_making.group_making" />
         <activity android:name=".My_Groups.Before_enter" />
