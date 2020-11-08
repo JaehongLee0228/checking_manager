@@ -25,6 +25,7 @@ import java.util.ArrayList;
 public class checking_Page extends AppCompatActivity {
 
     private String stuff_name, pos, group_name;
+    private String index_num;
     private FirebaseDatabase database;
     private DatabaseReference reference;
 
@@ -35,7 +36,7 @@ public class checking_Page extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_stuff_detail);
+        //setContentView(R.layout.activity_stuff_detail);//뷰필요없음.
 
         stuff_name = getIntent().getExtras().getString("stuff_name");
         pos = getIntent().getExtras().getString("pos_name");
@@ -43,7 +44,6 @@ public class checking_Page extends AppCompatActivity {
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference("Groups").child(group_name).child("stuff").child(stuff_name).child("position").child(pos);
-
 
         reference.child("contents").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -57,6 +57,9 @@ public class checking_Page extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), checking_page2.class);
                 intent.putExtra("size", size);
                 intent.putExtra("questionArray", question);
+                intent.putExtra("stuff_name", stuff_name);
+                intent.putExtra("pos_name", pos);
+                intent.putExtra("group_name", group_name);
                 startActivity(intent);
             }
 
