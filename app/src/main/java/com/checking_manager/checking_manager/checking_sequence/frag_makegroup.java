@@ -19,6 +19,8 @@ import com.google.zxing.integration.android.IntentResult;
 public class frag_makegroup  extends Fragment {
     private View view;
 
+    public static Class returnClass;
+
     private IntentIntegrator qrScan;
     Button scan_btn;
 
@@ -39,7 +41,6 @@ public class frag_makegroup  extends Fragment {
                 forScan();
             }
         });
-
 
         return view;
     }

@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.checking_manager.checking_manager.Main_sum;
+import com.checking_manager.checking_manager.My_Groups.Before_enter;
 import com.checking_manager.checking_manager.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -91,7 +93,11 @@ public class checking_page_showresult extends AppCompatActivity {
                 reference.child(String.valueOf(index_num)).child("contents").setValue(resultBox);
                 reference.child(String.valueOf(index_num)).child("date").setValue(inDate);
                 indexUpdate(index_num, inDate);
-                finish();
+
+                Intent intent = new Intent(getApplicationContext(), Main_sum.returnClass);
+                intent.putExtra("group_name", group_name);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
 
             }
         });

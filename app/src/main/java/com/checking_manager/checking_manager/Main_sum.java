@@ -14,17 +14,22 @@ import com.google.android.material.tabs.TabLayout;
 public class Main_sum extends AppCompatActivity {
 
     private FragmentPagerAdapter fragmentPagerAdapter;
+    public static Class returnClass;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewpager);
 
+        returnClass = this.getClass();
         ViewPager viewPager = findViewById(R.id.viewpager);
         fragmentPagerAdapter = new ViewPagerAdaptor(getSupportFragmentManager());
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
         viewPager.setAdapter(fragmentPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+
+
+
     }
 }
