@@ -26,7 +26,7 @@ import java.util.Map;
 public class checking_page_showresult extends AppCompatActivity {
 
     private String stuff_name, pos, group_name;
-    private int index_num;
+    private int index_num = 0;
 
     private FirebaseDatabase database;
     private DatabaseReference reference, reference2;
@@ -66,6 +66,7 @@ public class checking_page_showresult extends AppCompatActivity {
                 for(DataSnapshot ds : snapshot.getChildren()){
                     if(ds.getKey().toString().equals("checked_index")){
                         index_num = Integer.parseInt( ds.getValue().toString());
+                        ++index_num;
                     }
                 }
             }
@@ -105,7 +106,7 @@ public class checking_page_showresult extends AppCompatActivity {
     }
 
     void indexUpdate(int updateValue, String nDate){
-        reference2.child("checked_index").setValue(updateValue + 1);
+        reference2.child("checked_index").setValue(updateValue);
         reference2.child("checked").child(String.valueOf(updateValue)).setValue(nDate);
     }
 }
