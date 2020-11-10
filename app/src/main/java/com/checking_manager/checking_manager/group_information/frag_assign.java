@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -266,20 +267,21 @@ public class frag_assign  extends Fragment implements OnItemClick {
         reference.child("members").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                final String temp_ID = ID;
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     String email = ds.child("email").getValue().toString();
-                    if(email.equals(ID)) {
+                    if(email.equals(temp_ID)) {
                         String temp_key = ds.getKey();
                         reference.child("members").child(temp_key).removeValue();
 
-                        accept_reference.child("Members").child(stringReplace(ID)).addListenerForSingleValueEvent(new ValueEventListener() {
+                        accept_reference.child("Members").child(stringReplace(temp_ID)).addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot snapshot) {
                                 for (DataSnapshot ds : snapshot.getChildren()) {
                                     String temp_group_name = ds.child("group_name").getValue().toString();
                                     if(temp_group_name.equals(group_name)) {
                                         String temp_key2 = ds.getKey();
-                                        accept_reference.child("Members").child(stringReplace(ID)).child(temp_key2).removeValue();
+                                        accept_reference.child("Members").child(stringReplace(temp_ID)).child(temp_key2).removeValue();
                                         return;
                                     }
                                 }

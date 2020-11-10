@@ -219,6 +219,17 @@ public class group_making extends AppCompatActivity {
             dialog.setMessage("작업 중");
             dialog.show();
 
+            String status = "";
+            if (admin.isChecked())
+                status = "admin";
+            else if (member.isChecked())
+                status = "member";
+            else {
+                Toast.makeText(group_making.this, "관리자인지 일반멤버인지 선택해주세요.", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                return;
+            }
+
             final boolean[] judgement = {false};
             final String email = member_email_adding.getText().toString();
             if (!checkEmail(email)) {
@@ -240,17 +251,6 @@ public class group_making extends AppCompatActivity {
                     dialog.dismiss();
                     return;
                 }
-            }
-
-            String status = "";
-            if (admin.isChecked())
-                status = "admin";
-            else if (member.isChecked())
-                status = "member";
-            else {
-                Toast.makeText(group_making.this, "관리자인지 일반멤버인지 선택해주세요.", Toast.LENGTH_SHORT).show();
-                dialog.dismiss();
-                return;
             }
 
             reference2.child("Verification").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -288,6 +288,10 @@ public class group_making extends AppCompatActivity {
                         setListViewHeightBasedOnChildren(listView);
 
                         member_email_adding.setText("");
+                        dialog.dismiss();
+                    }
+                    else {
+                        Toast.makeText(group_making.this,"다시 시도해주세요. ",Toast.LENGTH_SHORT).show();
                         dialog.dismiss();
                     }
                 }
