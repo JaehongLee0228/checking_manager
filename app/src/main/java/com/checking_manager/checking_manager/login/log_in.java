@@ -9,7 +9,9 @@ import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -63,7 +65,21 @@ public class log_in extends AppCompatActivity {
         backPressCloseHandler = new BackPressCloseHandler(this);
         log_in_signUp.setPaintFlags(log_in_signUp.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
+        log_in_PW.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                switch (actionId) {
+                    case EditorInfo.IME_ACTION_SEARCH:
+                        // 검색 동작
 
+                        break;
+                    default:
+                        log_in_signIn.performClick();
+                        return false;
+                }
+                return true;
+            }
+        });
 
         if(logInAuto > 0)
             auto_logIn_function(IdAuto, PWAuto);
