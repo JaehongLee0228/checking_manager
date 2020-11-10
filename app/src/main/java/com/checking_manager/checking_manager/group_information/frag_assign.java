@@ -39,7 +39,7 @@ import java.util.ArrayList;
 public class frag_assign  extends Fragment implements OnItemClick {
 
     private View view;
-    private TextView my_group_name_textView, group_approval_textView;
+    private TextView group_approval_textView;
     private Button withdrawl_button;
     private ListView admin_listView, member_listView, approval_listView;
     private ArrayList<String> admin_list;
@@ -73,10 +73,8 @@ public class frag_assign  extends Fragment implements OnItemClick {
         member_listView = (ListView) view.findViewById(R.id.member_listView);
         admin_listView = (ListView) view.findViewById(R.id.admin_listView);
         withdrawl_button = (Button) view.findViewById(R.id.withdrawl_Button);
-        my_group_name_textView = (TextView) view.findViewById(R.id.tv_groupname);
 
         group_name = getActivity().getIntent().getExtras().getString("group_name");
-        my_group_name_textView.setText(group_name);
 
         database = FirebaseDatabase.getInstance();
         reference = database.getReference().child("Groups").child(group_name);
