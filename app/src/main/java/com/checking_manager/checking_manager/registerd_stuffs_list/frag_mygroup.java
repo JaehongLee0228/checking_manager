@@ -86,7 +86,6 @@ public class frag_mygroup extends Fragment implements SwipeRefreshLayout.OnRefre
                 dialog.show();
                 for(DataSnapshot ds : snapshot.getChildren()) {
                     String email = ds.child("email").getValue().toString();
-                    Log.d("mygroup_email", email);
                     if(email.equals(user_ID)) {
                         group_status = ds.child("status").getValue().toString();
                         if(group_status.equals("admin"))
