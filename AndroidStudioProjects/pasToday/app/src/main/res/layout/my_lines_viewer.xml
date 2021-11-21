@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/NightWallPaper"
+    tools:context=".MyLines_viewer">
+
+    <include
+        android:id="@+id/linebar"
+        layout="@layout/line_bar"/>
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Line\n"
+        android:textSize="20dp"
+        android:fontFamily="@font/tvn_bold"
+        android:textColor="@color/FontColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/textView7"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Title"
+            android:layout_marginLeft="0dp"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:fontFamily="@font/tvn_bold"
+            android:textColor="@color/FontColor" />
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/FontColor"
+            android:textSize="20dp"
+            android:fontFamily="@font/tvn_bold"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/WritingTime"
+            android:layout_marginLeft="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="When"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:fontFamily="@font/tvn_bold"
+            android:textColor="@color/FontColor" />
+        <TextView
+            android:id="@+id/timeBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/FontColor"
+            android:textSize="20dp"
+            android:fontFamily="@font/tvn_bold"
+            android:layout_weight="1" />
+    </LinearLayout>
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:textColor="@color/FontColor"
+        android:inputType="textMultiLine"
+        android:textSize="30dp"
+        android:fontFamily="@font/tvn_bold"
+        android:layout_height="wrap_content" />
+</LinearLayout>

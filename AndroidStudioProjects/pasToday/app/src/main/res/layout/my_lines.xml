@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/NightWallPaper"
+    tools:context=".MyLines" >
+
+    <include
+        android:id="@+id/linebar"
+        layout="@layout/line_bar"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="@color/FontColor"
+        android:textSize="20dp"
+        android:fontFamily="@font/tvn_bold"
+        android:text="My Lines\n" />
+
+    <ListView
+        android:id="@+id/listview"
+        android:layout_width="match_parent"
+        android:textColor="@color/FontColor"
+        android:layout_height="match_parent" />
+</LinearLayout>

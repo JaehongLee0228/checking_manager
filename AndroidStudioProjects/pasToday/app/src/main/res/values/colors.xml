@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#4D4A4A</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#999191</color>
+    <color name="NightWallPaper">#3C3C47</color>
+    <color name="FontColor">#F3F3F3</color>
+    <color name="BarColor">#A9A9B9</color>
+</resources>

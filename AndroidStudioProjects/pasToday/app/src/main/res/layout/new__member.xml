@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/NightWallPaper"
+    tools:context=".New_Member">
+
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/app_bar"/>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="407dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="40dp"
+        android:text="Sign Up\n"
+        android:fontFamily="@font/tvn_bold"
+        android:textSize="20dp"
+        android:textAlignment="center"
+        android:textColor="@color/FontColor"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="424dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="163dp"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/IdTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="85dp"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:fontFamily="@font/tvn_bold"
+            android:textSize="20dp"
+            android:textColor="@color/FontColor"
+            android:text="ID(E-MAIL) :"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/IdEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200dp"
+            android:ems="10"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:hint="ID(E-MAIL)"
+            android:textColorHint="@color/FontColor"
+            android:fontFamily="@font/tvn_bold"
+            android:textColor="@color/FontColor"
+            android:inputType="textEmailAddress" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_marginTop="46dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout1">
+
+        <TextView
+            android:id="@+id/PWTextView"
+            android:layout_marginLeft="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="PW :"
+            android:fontFamily="@font/tvn_bold"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/FontColor"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:id="@+id/PWEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:ems="10"
+            android:textSize="20dp"
+            android:gravity="center"
+            android:hint="PW"
+            android:fontFamily="@font/tvn_bold"
+            android:maxLength="20"
+            android:inputType="textPassword"
+            android:textColor="@color/FontColor"
+            android:textColorHint="@color/FontColor" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout3"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_marginTop="45dp"
+        android:layout_marginBottom="34dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+
+        <TextView
+            android:id="@+id/PWCHKTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/tvn_bold"
+            android:text="PW CHK :"
+            android:textSize="20dp"
+            android:textColor="@color/FontColor"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/PWCHKEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="150dp"
+            android:background="@color/NightWallPaper"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="PW CHK"
+            android:maxLength="20"
+            android:fontFamily="@font/tvn_bold"
+            android:textSize="20dp"
+            android:inputType="textPassword"
+            android:textColor="@color/FontColor"
+            android:textColorHint="@color/FontColor" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="33dp"
+        android:layout_marginBottom="232dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout3">
+
+        <Button
+            android:id="@+id/JoinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/tvn_bold"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:onClick="signUp"
+            android:text="Sign Up" />
+
+    </RelativeLayout>
+</android.support.constraint.ConstraintLayout>

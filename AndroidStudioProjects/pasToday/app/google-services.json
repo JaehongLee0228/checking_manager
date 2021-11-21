@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "683791698526",
+    "firebase_url": "https://ljh-final-exam.firebaseio.com",
+    "project_id": "ljh-final-exam",
+    "storage_bucket": "ljh-final-exam.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:683791698526:android:3c53f18f69e8cdf6",
+        "android_client_info": {
+          "package_name": "com.example.ljh_final_exam"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "683791698526-pljsn0r2r7b3smreeeedfqmdqt49dvnf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ljh_final_exam",
+            "certificate_hash": "c636dfa9f440ec8696998763b158eb48a8c0d1b0"
+          }
+        },
+        {
+          "client_id": "683791698526-a6d0eturigohkhj8i8rb1hs6di00bif7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkA7HIyR3pxitdlWcbr-2vieBWEFEiliM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "683791698526-a6d0eturigohkhj8i8rb1hs6di00bif7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

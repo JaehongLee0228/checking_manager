@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">pasToday</string>
+    <string name="my_line_name">My pasTodays</string>
+    <string name="lines_shared_name">All pasTodays</string>
+    <string name="writing_name">Writing</string>
+    <string name="SuccessfulJoining">Now you are our member</string>
+    <string name="UnsuccessfulJoining">Sorry, you failed to join</string>
+    <string name="Successful_Login">Log in completed</string>
+    <string name="Unsuccessful_Login">Log in failed</string>
+</resources>

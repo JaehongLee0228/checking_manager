@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/NightWallPaper"
+    tools:context=".Log_In">
+
+    <include
+        android:id="@+id/appbar"
+        layout="@layout/app_bar"/>
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="407dp"
+        android:layout_height="29dp"
+        android:layout_marginTop="55dp"
+        android:layout_marginBottom="40dp"
+        android:text="Sign In\n"
+        android:inputType="textMultiLine"
+        android:textAlignment="center"
+        android:fontFamily="@font/tvn_bold"
+        android:textSize="20dp"
+        android:textColor="@color/FontColor"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbar" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="424dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="163dp"
+        android:layout_marginBottom="46dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/IdTextView"
+            android:layout_width="wrap_content"
+            android:layout_marginLeft="85dp"
+            android:layout_height="wrap_content"
+            android:textColor="@color/FontColor"
+            android:fontFamily="@font/tvn_bold"
+            android:text="ID :"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"/>
+
+        <EditText
+            android:id="@+id/IdEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="180dp"
+            android:ems="10"
+            android:gravity="center"
+            android:hint="ID"
+            android:textSize="20dp"
+            android:fontFamily="@font/tvn_bold"
+            android:inputType="textEmailAddress|textEmailSubject"
+            android:textColor="@color/FontColor"
+            android:textColorHint="@color/FontColor" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginBottom="138dp"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout1">
+
+        <TextView
+            android:id="@+id/PWTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/tvn_bold"
+            android:textSize="20dp"
+            android:textColor="@color/FontColor"
+            android:text="PW :"
+            android:textAlignment="center" />
+
+        <EditText
+            android:id="@+id/PWEditText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="150dp"
+            android:textColorHint="@color/FontColor"
+            android:textSize="20dp"
+            android:textColor="@color/FontColor"
+            android:ems="10"
+            android:fontFamily="@font/tvn_bold"
+            android:gravity="center"
+            android:hint="PW"
+            android:maxLength="20"
+            android:inputType="textPassword"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_marginTop="138dp"
+        android:layout_marginBottom="232dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2">
+
+        <Button
+            android:id="@+id/JoinButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:fontFamily="@font/tvn_bold"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            android:text="Sign Up" />
+
+        <Button
+            android:id="@+id/LogInButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/tvn_bold"
+            android:textStyle="bold"
+            android:layout_marginLeft="250dp"
+            android:onClick="signIn"
+            android:textSize="20dp"
+            android:text="Sign In" />
+    </RelativeLayout>
+
+    <CheckBox
+        android:id="@+id/checkBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="158dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="157dp"
+        android:layout_marginBottom="176dp"
+        android:textColor="@color/FontColor"
+        android:fontFamily="@font/tvn_bold"
+        android:text="Use Auto LogIn"
+        app:layout_constraintBottom_toTopOf="@+id/relativeLayout4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
+</android.support.constraint.ConstraintLayout>
